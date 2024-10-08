@@ -15,4 +15,4 @@
 
 ### Deploy
 - Docker
-- Gitlab CI-CD
+- Gitlab CI/CD
