@@ -1,4 +1,4 @@
-## Ecommerce for wholesale web app
+## Ecommerce web app for wholesale
 
 ### Environment
 - Node v18.15.0, avaliable with node version > 14
