@@ -5,7 +5,7 @@
 - Angular 15.2.4: ```npm install -g @angular/cli```
 
 ### Build
-- npm install
+- ```npm install```
 - [environment]: ```development```, ```staging```, ```production```
 - ```ng build --configuration=[environment]```
 - Default in development:  ```ng build```
