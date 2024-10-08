@@ -1,10 +1,8 @@
-## WEB APP
+## Ecommerce for wholesale web app
 
-### Deploy
-
-### Environments
-- node v18.15.0, avaliable with node version > 14
-- angular 15.2.4: ```npm install -g @angular/cli``
+### Environment
+- Node v18.15.0, avaliable with node version > 14
+- Angular 15.2.4: ```npm install -g @angular/cli``
 
 ### Build
 - npm install
@@ -14,3 +12,7 @@
 
 ### Run
 - ```ng serve --configuration=[environment]```
+
+### Deploy
+- Docker
+- Gitlab CI-CD
