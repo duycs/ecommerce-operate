@@ -1,0 +1,62 @@
+<div *ngIf="data">
+    <mat-dialog-content>
+        <h1 mat-dialog-title>{{data.title}}</h1>
+        <div mat-dialog-content>
+            <div class="confirm">
+                <div *ngIf="data && data.type == 'shareLink'">
+                    <div *ngFor="let item of data.list">
+                        <p><span class="label">{{item}}</span></p>
+                    </div>
+                </div>
+
+                <div *ngIf="data && data.type== 'html'">
+                    <div [innerHTML]="data.html">
+                    </div>
+                </div>
+
+                <div *ngIf="data && data.type == 'listOrders'">
+                    <div #image style="width: 100%; height: 100%; float: left;">
+                        <div style="margin: 12px; float: left; padding: 12px; border: 1px solid green; background-color: white; width: auto; height: auto;"
+                            *ngFor="let order of data.list">
+                            <div>
+                                <p>
+                                    <span>Mã đơn hàng: </span><span class="label">{{order?.customerOrderCode}}</span>
+                                </p>
+                                <p>
+                                    <span>Thời gian: </span><span class="">
+                                        {{order?.createdDate | dateDisplay:'origin'}}</span>
+                                </p>
+                                <p>
+                                    <span>Mã đơn giao: </span><span class="label">{{order?.code}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="container">
+        <div class="group-btn full-width" style="padding: 0 24px;">
+            <button mat-button mat-dialog-close color="primary" (click)="close()" cdkFocusInitial>
+                {{ 'action.close' | translate}}
+            </button>
+            <div class="right">
+                <button *ngIf="data.type === 'shareLink'" mat-raised-button color="primary"
+                    [cdkCopyToClipboard]="data.list" (click)="copy()">
+                    <mat-icon>file_copy</mat-icon>
+                    <span>Copy</span>
+                    <div style="margin-left: 12px;" class=" right"></div>
+                </button>
+
+                <button *ngIf="data && data.type == 'listOrders'" mat-raised-button color="primary"
+                    (click)="downloadImage()">
+                    <mat-icon>download</mat-icon>
+                    <span>Tải ảnh</span>
+                    <div style="margin-left: 12px;" class=" right"></div>
+                </button>
+
+            </div>
+        </div>
+    </mat-dialog-actions>
+</div>

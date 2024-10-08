@@ -1,0 +1,72 @@
+<div class="container full-width">
+    <div class="row">
+        <div class="col">
+            <p class="">Họ tên</p>
+        </div>
+        <div class="col">
+            <p class="label">{{staffDetail.name}}</p>
+        </div>
+        <div class="col">
+            <p class="">Email</p>
+        </div>
+        <div class="col">
+            <p class="label">{{staffDetail.email}}</p>
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <p class="">Số điện thoại</p>
+        </div>
+        <div class="col">
+            <p class="label">{{staffDetail.phoneNumber}}</p>
+        </div>
+        <div class="col">
+            <p class="">Giới tính</p>
+        </div>
+        <div class="col">
+            <p class="label">{{staffDetail?.gender == 1 ? 'Nam' : 'Nữ'}}</p>
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <p>Miêu tả</p>
+        </div>
+        <div class="col">
+            <p class="label">{{staffDetail.description}}</p>
+        </div>
+        <div class="col">
+            <p class="">Sinh nhật</p>
+        </div>
+        <div class="col">
+            <p class="label">{{staffDetail?.dob | dateDisplay:'full'}}</p>
+        </div>
+        <div class="col">
+            <p></p>
+        </div>
+        <div class="col">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2">
+            <p class="">Trạng thái</p>
+        </div>
+        <div class="col-2">
+            <app-chip [chips]="staffDetail.statusChips"></app-chip>
+        </div>
+        <div class="col-2">
+            <p class="">Nhóm quyền</p>
+        </div>
+        <div class="col">
+            <app-chip [chips]="staffDetail.permissionGroups"></app-chip>
+        </div>
+    </div>
+</div>

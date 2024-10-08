@@ -1,0 +1,4 @@
+<mat-chip-listbox aria-label="selection" *ngIf="chips">
+    <mat-chip-option *ngFor="let chip of chips" [color]="chip.color" selected disabled
+        [ngStyle]="{background: chip.color}">{{chip.name}}</mat-chip-option>
+</mat-chip-listbox>

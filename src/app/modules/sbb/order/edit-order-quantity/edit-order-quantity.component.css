@@ -1,0 +1,24 @@
+.cdk-overlay-pane {
+    width: 80vw !important;
+    height: 90vh !important;
+    position: fixed;
+    top: 12px;
+}
+
+mat-dialog-content {
+    overflow-y: scroll;
+}
+
+.mdc-icon-button {
+    font-size: unset;
+}
+
+.close-button {
+    margin: 6px;
+}
+
+app-input-counter {
+    display: block;
+    width: 170px;
+    margin-right: 12px;
+}

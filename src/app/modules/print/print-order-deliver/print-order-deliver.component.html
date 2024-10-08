@@ -1,0 +1,138 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs">
+  <div class="print-box" *ngIf="orderDetail">
+    <div class="">
+      <div class="container no-margin ">
+        <div class="row">
+          <div class="col-12">
+
+            <div class="row">
+              <div class="col">
+                <p class="">
+                  Liên hệ SBB:
+                </p>
+              </div>
+              <div class="col">
+                <p class="value label">0335.73.6969</p>
+              </div>
+              <div class="col">
+                <p class="right">
+                  Mã đơn giao hàng:
+                </p>
+              </div>
+              <div class="col">
+                <p class="value label right">{{orderDetail.code}}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <p class="">
+                  Khách hàng:
+                </p>
+              </div>
+              <div class="col">
+                <p class="value label">{{orderDetail?.customer.name}}</p>
+              </div>
+
+              <div class="col">
+                <p class="right">
+                  Mã đơn đặt hàng:
+                </p>
+              </div>
+              <div class="col">
+                <p class="value label right">{{ orderDetail.orderCode }}
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <p class="">
+                  Số điện thoại:
+                </p>
+              </div>
+              <div class="col">
+                <p class="value label">{{customerPhoneHidden}}</p>
+              </div>
+
+              <div class="col">
+                <p class="right">
+                  Ngày tạo đơn giao hàng:
+                </p>
+              </div>
+              <div class="col">
+                <p class="value label right">{{orderDetail.createdDate | dateDisplay :'origin'}}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3">
+                <p class="">
+                  Địa chỉ:
+                </p>
+              </div>
+              <div class="col-9">
+                <p class="value label">{{orderDetail.shippingAddress}}</p>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <p class="">
+                  Lần giao:
+                </p>
+              </div>
+              <div class="col">
+                <p class="value">{{orderDetail.deliveryNumber}}</p>
+              </div>
+
+              <div class="col">
+                <p class="right">
+                  Thời gian in:
+                </p>
+              </div>
+              <div class="col">
+                <p class="value label right">{{ current | dateDisplay :'origin'}}
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="">
+      <div class="print-box">
+        <div class="container no-margin ">
+          <div class="row">
+            <div class="table" *ngIf="orderDetail.products">
+              <app-print-order-detail-item [products]="orderDetail.products"></app-print-order-detail-item>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container no-margin  right">
+      <div class="col-12">
+        <div class="row">
+          <div class="col">
+          </div>
+          <div class="col">
+          </div>
+          <div class="col">
+            <p class="right">
+              Tổng số lượng:
+            </p>
+          </div>
+          <div class="col">
+            <p class="value label right">{{orderDetail.quantity}}</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

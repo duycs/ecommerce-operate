@@ -1,0 +1,381 @@
+<div class="" fxFlex="1 0 100%" fxLayout="column" fxLayoutAlign="start stretch">
+  <div class="header-button-row">
+    <app-back-button [title]="'Thống kê'" [real]="'done'"></app-back-button>
+  </div>
+
+  <div class="full-width">
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data?.shopCount?.totalRecords ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">account_balance</mat-icon>
+
+              <a href="/sbb/shops">
+                <p class="label left">
+                  Nhà cung cấp
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data?.transporterCount ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">local_shipping</mat-icon>
+
+              <a href="/sbb/transporters">
+                <p class="label left">
+                  Nhà vận chuyển
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data.productCount ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">card_travel</mat-icon>
+
+              <a href="/sbb/products">
+                <p class="label left">
+                  Sản phẩm
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data.productInOrderCount ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">card_travel</mat-icon>
+
+              <a href="/sbb/product-orders">
+                <p class="label left">
+                  Sản phẩm đã đặt
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data?.customerCount?.totalRecords ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">account_box</mat-icon>
+
+              <a href="/sbb/customers">
+                <p class="label left">
+                  Khách hàng
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data.orderCount ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">list_alt</mat-icon>
+
+              <a href="/sbb/orders">
+                <p class="label left">
+                  Đơn hàng từ khách hàng
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data.orderSupplierCount ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">list_alt</mat-icon>
+
+              <a href="/sbb/order-subs">
+                <p class="label left">
+                  Đơn hàng con
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data?.orderReceiptImportCount ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">list_alt</mat-icon>
+
+              <a href="/sbb/order-enters">
+                <p class="label left">
+                  Đơn nhập hàng NCC
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data?.orderDeliverCount ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">list_alt</mat-icon>
+
+              <a href="/sbb/order-transfers">
+                <p class="label left">
+                  Đơn chuyển hàng từ NCC
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data?.orderReceiptExportCount ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">list_alt</mat-icon>
+
+              <a href="/sbb/order-delivers">
+                <p class="label left">
+                  Đơn giao hàng cho khách
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data?.transactionCount ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">money</mat-icon>
+
+              <a href="/sbb/money-statistic">
+                <p class="label left">
+                  Giao dịch thu/chi
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data?.partnerClearingDebtCount ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">money</mat-icon>
+
+              <a href="/sbb/debt-statistic">
+                <p class="label left">
+                  Giao dịch công nợ
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data?.postsCount ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">notes</mat-icon>
+
+              <a href="/sbb/posts">
+                <p class="label left">
+                  Bài đăng
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data?.departmentCount ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">group_work</mat-icon>
+
+              <a href="/sbb/departments">
+                <p class="label left">
+                  Bộ phận
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data?.printerCount ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">devices</mat-icon>
+
+              <a href="/sbb/assets/prs">
+                <p class="label left">
+                  Máy in
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data?.staffCount ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">account_circle</mat-icon>
+
+              <a href="/sbb/staffs">
+                <p class="label left">
+                  Nhân viên
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <p class="label font-medium">{{data?.templateCount ?? 0}}</p>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-icon class="left">brightness_auto</mat-icon>
+
+              <a href="/sbb/templates">
+                <p class="label left">
+                  Thiết lập mẫu
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>

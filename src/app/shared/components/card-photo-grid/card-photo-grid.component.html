@@ -1,0 +1,19 @@
+<div class="photos-container" fxLayout="row" fxLayoutAlign="space-around center">
+    <mat-card *ngFor="let photo of photos" class="example-card card-photo">
+        <a [href]="photo" target="_blank">
+            <div class="box">
+                <img class="image" mat-card-image [src]="photo" alt="Photo">
+            </div>
+        </a>
+
+        <mat-card-content class="btn">
+            <button mat-button style="float:left; margin: 6px;" (click)="remove(photo)">Xóa</button>
+        </mat-card-content>
+
+    </mat-card>
+
+    <mat-paginator *ngIf="false" [length]="this.photos.length" [pageIndex]="0" [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons aria-label="Select page of periodic elements"
+        (page)="handlePageEvent($event)">
+    </mat-paginator>
+</div>

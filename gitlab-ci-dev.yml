@@ -1,0 +1,43 @@
+
+variables:
+  DEV_PREFIX: ${DOCKER_PREFIX}develop/
+  COMPOSE_FILE_DEV: docker/docker-compose-dev.yml
+
+.dev-env:
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'develop'
+
+#========================= I. Build & Deploy môi trường test ===========================================
+# 1. Build ứng dụng
+build-dev 1/2:
+  stage: build
+  extends: .dev-env
+  tags:
+    - tungnt
+  script:
+    - docker build . -f docker/Dockerfile -t ${DEV_PREFIX}ecommerce-operation:latest
+build-dev 2/2:
+  stage: build
+  extends: .dev-env
+  needs: [build-dev 1/2]
+  tags:
+    - tungnt
+  script:
+    - docker push ${DEV_PREFIX}ecommerce-operation:latest
+
+# 2. Deploy ứng dụng lên dev
+deploy-dev 1/2:
+  stage: deploy
+  extends: .dev-env
+  tags:
+    - dev-vpc-vt 
+  script:
+    - docker-compose -f $COMPOSE_FILE_DEV pull
+deploy-dev 2/2:
+  stage: deploy
+  extends: .dev-env
+  needs: [deploy-dev 1/2]
+  tags:
+    - dev-vpc-vt 
+  script:
+    - docker-compose -f $COMPOSE_FILE_DEV up -d

@@ -1,0 +1,86 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<mat-dialog-content>
+    <h1 mat-dialog-title>Chi tiết mẫu cài đặt</h1>
+    <div mat-dialog-content>
+        <div class="confirm">
+            <div class="container full-width no-margin">
+                <div class="row">
+                    <div class="col-2">
+                        <p class="label">Id</p>
+                    </div>
+                    <div class="col">
+                        <p class="">
+                            {{data.id}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2">
+                        <p class="label">Tên mẫu</p>
+                    </div>
+                    <div class="col">
+                        <p class="">
+                            {{data.name}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2">
+                        <p class="label">Mã</p>
+                    </div>
+                    <div class="col">
+                        <p class="">
+                            {{data.code}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2">
+                        <p class="label">Loại</p>
+                    </div>
+                    <div class="col">
+                        <span *ngIf="data.type == 1">Lợi nhuận theo giá nhập</span>
+                        <span *ngIf="data.type == 2">Chi phí vận chuyển theo danh mục</span>
+                        <span *ngIf="data.type == 3">lợi nhuận sản phẩm theo danh mục của NCC</span>
+                        <span *ngIf="data.type == 4">Lợi nhuận theo từng sản phẩm</span>
+                        <span>({{data.type}})</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2">
+                        <p class="label">Mô tả</p>
+                    </div>
+                    <div class="col">
+                        <p class="">
+                            {{data.description}}
+                        </p>
+                    </div>
+                </div>
+                <div class="">
+                    <p class="label">Chi tiết cài đặt</p>
+                </div>
+                <div class="row">
+                    <pre><p>{{data.settings | json}}</p></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions class="container">
+    <div class="group-btn w-100" style="text-align: right;">
+        <button mat-stroked-button color="warn" (click)="close()" cdkFocusInitial>
+            <mat-icon aria-hidden="false" aria-label="Save icon" fontIcon="close"></mat-icon>
+            {{ 'action.close' | translate}}
+        </button>
+        <button *ngIf="data.type == 1 || data.type == 2" class="right-button left left" mat-raised-button color="primary" (click)="update()">
+            <mat-icon>edit</mat-icon>
+            <span>Cập nhật</span>
+        </button>
+    </div>
+</mat-dialog-actions>

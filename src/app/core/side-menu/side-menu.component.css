@@ -1,0 +1,42 @@
+ul.left-menu {
+    padding: 0;
+}
+
+ul.left-menu li {
+    cursor: pointer;
+    list-style: none;
+    padding: 12px;
+}
+
+ul.left-menu li a {
+    display: block;
+    padding: 6px;
+}
+
+.main-active{
+    color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1));
+    text-decoration: none;
+}
+
+.sub-active{
+    color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1));
+    text-decoration: none;
+}
+
+/* li.active>a {
+    color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1));
+} */
+
+.left-menu ul {
+    padding: 0;
+}
+
+.left-menu ul li a {
+    padding: 5px 5px 5px 15px;
+    display: block;
+    padding: 6px;
+}
+
+.active ul {
+    display: block !important;
+}

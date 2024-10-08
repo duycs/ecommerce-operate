@@ -1,0 +1,391 @@
+<div id="order-transfer" fxFlex class="fxClass-all" ngClass.xs="fxClass-xs">
+    <div class="header-button-row">
+        <app-back-button [title]="'Thông tin nhập hàng trên đơn chuyển'" [real]="'doing'"></app-back-button>
+
+        <div class="create-delivery-order action ">
+            <button class="right-button" mat-raised-button color="none" (click)="refresh()">
+                <mat-icon>refresh</mat-icon>
+                <span>Làm mới</span>
+            </button>
+            <button class="right-button" mat-raised-button color="accent" (click)="addOrderEnter()">
+                <mat-icon>add</mat-icon>
+                <span>Tạo đơn nhập hàng mới</span>
+                <div style="margin-left: 12px;" class=" right"></div>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="orderDetail">
+        <mat-card class="full-width">
+            <mat-card-header>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="container no-margin full-width">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="title">
+                                <p class="label">Thông tin đơn chuyển hàng</p>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Mã đơn chuyển hàng
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.code}}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="">
+                                        Thời gian tạo đơn chuyển
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value">
+                                        <span matTooltip="{{orderDetail.createdDate | dateDisplay:'origin'}}"
+                                            matTooltipPosition="above">
+                                            {{orderDetail.createdDate | dateDisplay :'origin'}}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Nhân viên
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <a class="hover-pointer no-underline" href="/sbb/staffs/{{orderDetail?.staffId}}">
+                                        <p class="value">{{orderDetail?.staffname}}</p>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <p class="">
+                                        Trạng thái đơn
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <app-chip [chips]="orderDetail?.importReceiptStatusChips"></app-chip>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Nhà cung cấp
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <a class="hover-pointer no-underline" href="/sbb/shops/{{orderDetail?.shopId}}">
+                                        <p class="value">{{orderDetail.shopName}}</p>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <p class="">
+                                        Trạng thái sản phẩm
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <app-chip [chips]="orderDetail?.quantityStatusChips"></app-chip>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Nhà vận chuyển
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <a class="hover-pointer no-underline" href="/sbb/transporters/{{orderDetail.transporterId}}">
+                                    <p class="value">{{orderDetail?.transporter.name}}</p>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                </div>
+                                <div class="col"></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <mat-icon style="float: left; margin-right: 6px;">notes</mat-icon>
+                                    <p class="left" style="margin-right: 6px;">
+                                        Ghi chú của NCC:
+                                    </p>
+                                    <p class="value">{{orderDetail?.note}}</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-4">
+                            <div class="title">
+                                <p class="label">Số lượng</p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Tổng số lượng chuyển
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.quantity}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Tổng số lượng đã nhập
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.importedQuantity}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Tổng giá trị nhập/chuyển
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.totalPrice |
+                                        currency:'VND'}}
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <br>
+
+        <span class="head-title">Danh sách</span>
+
+        <div class="products">
+            <mat-tab-group class="" mat-stretch-tabs="false" mat-align-tabs="start">
+                <mat-tab label="Danh sách đơn nhập hàng">
+                    <div class="mat-elevation-z8 m-12">
+                        <div class="table-container">
+                            <table mat-table class="jobs-table mat-elevation-z8" [dataSource]="dataSourceOrder" matSort
+                                matSortActive="id" matSortDirection="asc" matSortDisableClear>
+
+                                <ng-container matColumnDef="numericalOrder" sticky>
+                                    <th mat-header-cell *matHeaderCellDef
+                                        [innerHTML]="'order.numerical-order' | translate">
+                                    </th>
+                                    <td mat-cell *matCellDef="let element; let i = index;">
+                                        {{ i + 1}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="code">
+                                    <th mat-header-cell *matHeaderCellDef>Mã đơn nhập hàng
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <a class="hover-pointer no-underline" href="/sbb/order-enters/{{element.id}}">
+                                            <span>{{element.code}}</span>
+                                            <br>
+                                            <span>{{element.createdDate | date:'short'}}</span>
+                                        </a>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="supplier">
+                                    <th mat-header-cell *matHeaderCellDef>Nhà cung cấp
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <a class="hover-pointer no-underline" href="/sbb/shops/{{element.shopId}}">
+                                        {{element.shopName}}
+                                        </a>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="quantity">
+                                    <th mat-header-cell *matHeaderCellDef>Sản phẩm Đã nhập/Chuyển hàng
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="statistic-ratio">
+                                            <span
+                                                class="information">{{element.quantityImport}}/{{element.quantityDelivered}}</span>
+                                            <section class="example-section">
+                                                <mat-progress-bar class="example-margin"
+                                                    [ngClass]="element.quantityRatioColorClass" mode="determinate"
+                                                    [value]="element.quantityRatio"></mat-progress-bar>
+                                            </section>
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="totalPrice">
+                                    <th mat-header-cell *matHeaderCellDef [innerHTML]="'order.total-price' | translate">
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        {{element.totalPrice | currency:'VND'}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="processStatus">
+                                    <th mat-header-cell *matHeaderCellDef
+                                        [innerHTML]="'order.process-status' | translate">
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <app-chip [chips]="element.importReceiptStatusChips"></app-chip>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="quantityStatus">
+                                    <th mat-header-cell *matHeaderCellDef
+                                        [innerHTML]="'order.quantity-status' | translate">
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <app-chip [chips]="element.quantityStatusChips"></app-chip>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="note">
+                                    <th mat-header-cell *matHeaderCellDef>Ghi chú
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        {{element.note}}
+                                    </td>
+                                </ng-container>
+
+                                <!-- <ng-container matColumnDef="createdDate">
+                                <th mat-header-cell *matHeaderCellDef>Ngày tạo
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.createdDate | date:'short'}}
+                                </td>
+                            </ng-container> -->
+
+                                <ng-container matColumnDef="action" sticky>
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="head-action"
+                                        [innerHTML]="'action.title' | translate">
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="actions">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #menu="matMenu">
+                                            <button mat-menu-item (click)="openImportDetail(element)">
+                                                <mat-icon>remove_red_eye</mat-icon>
+                                                <span [innerHTML]="'action.detail' | translate"></span>
+                                            </button>
+                                        </mat-menu>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedOrderColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedOrderColumns;">
+                                </tr>
+                            </table>
+                            <!-- <mat-paginator [length]="this.dataSourceOrder.count" [pageIndex]="0" [pageSize]="10"
+                                            [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons (page)="handleOrderPageEvent($event)">
+                                        </mat-paginator> -->
+                        </div>
+                    </div>
+                </mat-tab>
+
+                <mat-tab label="Danh sách sản phẩm đã nhập">
+                    <div class="mat-elevation-z8 m-12">
+                        <div class="table-container">
+                            <table mat-table class="jobs-table mat-elevation-z8" [dataSource]="dataSource" matSort
+                                matSortActive="id" matSortDirection="asc" matSortDisableClear>
+
+                                <ng-container matColumnDef="orderNumber">
+                                    <th mat-header-cell *matHeaderCellDef>STT </th>
+                                    <td mat-cell *matCellDef="let element; let i = index;">
+                                        {{++(i+ 1)}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="name" sticky>
+                                    <th mat-header-cell *matHeaderCellDef>Tên sản phẩm
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <span class="label left full-width">{{element.name}}</span>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="sku" sticky>
+                                    <th mat-header-cell *matHeaderCellDef>Mã sản phẩm
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <span class="left full-width">
+                                            <a class="hover-pointer no-underline" href="/sbb/products/{{element.productId}}">
+                                            {{element.sku}}
+                                            </a>
+                                        </span>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="importedQuantity">
+                                    <th mat-header-cell *matHeaderCellDef>Số lượng nhập
+                                    </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.importedQuantity}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="quantity">
+                                    <th mat-header-cell *matHeaderCellDef>Số lượng
+                                    </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="discount">
+                                    <th mat-header-cell *matHeaderCellDef>Chiết khấu
+                                    </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.discount ?? 0 | currency:'VND'}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="totalPrice">
+                                    <th mat-header-cell *matHeaderCellDef>Tổng tiền
+                                    </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.totalPrice | currency:'VND'}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="action" sticky>
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="head-action"
+                                        [innerHTML]="'action.title' | translate">
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <button mat-icon-button [matMenuTriggerFor]="menu"
+                                            aria-label="Example icon-button with a menu">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #menu="matMenu">
+                                            <button mat-menu-item (click)="openProductDetail(element)">
+                                                <mat-icon>remove_red_eye</mat-icon>
+                                                <span [innerHTML]="'action.detail' | translate"></span>
+                                            </button>
+                                        </mat-menu>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                        </div>
+                    </div>
+                </mat-tab>
+                <!-- <mat-tab label="Chi tiết đơn chuyển hàng">
+                    <mat-card class="full-width">
+                        <mat-card-content>
+                        </mat-card-content>
+                    </mat-card>
+                </mat-tab> -->
+            </mat-tab-group>
+        </div>
+
+    </div>
+</div>

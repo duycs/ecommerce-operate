@@ -1,0 +1,46 @@
+<ul id="sideMenu" class="nav flex-column flex-nowrap text-truncate left-menu">
+    <li class="nav-item main" *ngFor="let n of menuList" (click)="select('main', n, $event);" id={{n.id}}
+        [ngClass]="{active: isActive('main', n.label)}">
+        <div class="full-width" *ngIf="n.hasPermission">
+            <mat-icon style="margin-top: 6px; float:left">{{n.icon}}</mat-icon>
+            <a style="float: left; width: auto;">{{n.label}}</a>
+            <mat-icon *ngIf="n.subMenu && n.subMenu.length > 0" style="float: right;">keyboard_arrow_right</mat-icon>
+            <div class="circle-dot" style="float: right; margin-top: 8px; margin-right: 18px;">
+                <div class="circle-dot-orange right" *ngIf="n.real === 'doing'"></div>
+                <div class=" right" *ngIf="n.real === 'done'"></div>
+            </div>
+        </div>
+
+        <ul class="full-width" style="display:none; float: left;">
+            <li class="nav-item sub" *ngFor="let child of n.subMenu" [ngClass]="{active: isActive('sub', child.label)}"
+                (click)="select('sub', child, $event);" id={{child.id}}>
+                <div (click)="navigateTo(child.route)" *ngIf="child.hasPermission">
+                    <div class="">
+                        <span>{{child.label}} </span>
+                        <div class="circle-dot-orange right" *ngIf="child.real === 'doing'"></div>
+                        <div class=" right" *ngIf="child.real === 'done'"></div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </li>
+
+    <li>
+        <mat-divider></mat-divider>
+        <div style="margin: 12px 0;">
+            <mat-chip disabled>
+                Build: {{buildVersion}}
+            </mat-chip>
+
+            <!-- <div class="full-width">
+                <span style="color: grey;">Trạng thái đang phát triển</span>
+                <div class=" right"></div>
+            </div>
+
+            <div class="full-width">
+                <span style="color: grey;">Trạng thái hoàn thành</span>
+                <div class=" right"></div>
+            </div> -->
+        </div>
+    </li>
+</ul>

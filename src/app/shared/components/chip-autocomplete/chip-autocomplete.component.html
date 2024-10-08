@@ -1,0 +1,26 @@
+<form>
+  <mat-form-field class="full-width">
+    <mat-label>{{title}}</mat-label>
+    <mat-chip-grid #chipGrid aria-label="lựa chọn">
+      <mat-chip-row *ngFor="let chip of chips" (removed)="remove(chip)">
+        {{chip.name}}
+        <button matChipRemove [attr.aria-label]="'xóa ' + chip.name">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+    </mat-chip-grid>
+    <input placeholder="Thêm..." #elementInput [formControl]="formCtrl" [matChipInputFor]="chipGrid"
+      [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)"
+      (keyup)="onSearchEnter($event)" (click)="onClickAll($event)" />
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let chip of filteredChips | async" [value]="chip">
+        {{chip?.name ?? chip?.value?.name}}
+      </mat-option>
+    </mat-autocomplete>
+
+    <button style="margin-top: 6px;" *ngIf="chips && chips.length > 0" matSuffix mat-icon-button aria-label="Clear"
+      (click)="clear()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</form>

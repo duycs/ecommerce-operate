@@ -1,0 +1,194 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs" [formGroup]="form">
+    <div class="header-button-row">
+        <app-back-button [title]="'Thêm mới phiếu cập nhật giá'" [real]="'done'"></app-back-button>
+
+        <div class="create-delivery-order action">
+            <button class="right-button" mat-raised-button color="primary" (click)="save()">
+                <mat-icon>save</mat-icon>
+                <span>Lưu</span>
+            </button>
+        </div>
+    </div>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="no-margin full-width">
+                <div class="row">
+                    <p class="label">Kiểu cập nhật giá</p>
+                    <mat-radio-group aria-label="Cách cập nhật giá" formControlName="type">
+                        <mat-radio-button value="1">Cập nhật giá mới</mat-radio-button>
+                        <mat-radio-button value="2">Tăng thêm giá</mat-radio-button>
+                        <mat-radio-button value="3">Giảm bớt giá</mat-radio-button>
+                        <mat-radio-button value="4">Tăng % giá</mat-radio-button>
+                        <mat-radio-button value="5">Giảm % giá</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="full-width" style="margin-top: 12px!important;">
+        <mat-card-content>
+            <div class="no-margin full-width">
+                <div class="row">
+                    <app-chip-autocomplete style="width: 100%;" *ngIf="products" [allChips]="products"
+                        [title]="'Sản phẩm'" (outSelectedOptions)="onSelectProduct($event)"></app-chip-autocomplete>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>{{typeText}} {{upPriceText}}</mat-label>
+                            <input matInput placeholder="" formControlName="upPrice" id="upPrice">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>Ghi chú</mat-label>
+                            <input matInput placeholder="" formControlName="note">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-4">
+                        <button class="right-button" mat-raised-button color="primary" (click)="addProduct()">
+                            <mat-icon>add</mat-icon>
+                            <span>Thêm sản phẩm</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="full-width" style="margin-top: 12px!important;">
+        <mat-card-content>
+            <div class="no-margin full-width">
+                <div class="row">
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>{{typeText}} {{upPriceTextAll}}</mat-label>
+                            <input matInput placeholder="" formControlName="upPriceAll" id="upPriceAll">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-4">
+                        <button class="right-button" mat-raised-button color="primary" (click)="setForAll()">
+                            <mat-icon>settings</mat-icon>
+                            <span>Thiết lập cho tất cả</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <p class="head-title full-width">Danh sách sản phẩm cập nhật giá</p>
+
+    <div class="full-width" style="margin: 0 12px;">
+        <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-edit">
+            <ng-container matColumnDef="orderNumber">
+                <th mat-header-cell *matHeaderCellDef>STT </th>
+                <td mat-cell *matCellDef="let element; let i = index;">
+                    {{paginator.pageSize*paginator.pageIndex + i + 1}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="image">
+                <th mat-header-cell *matHeaderCellDef>Ảnh </th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                    <div class="image">
+                        <img style="width: 50px;" src="{{element?.product.image}}">
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name" sticky>
+                <th mat-header-cell *matHeaderCellDef [innerHTML]="'product.name' | translate">
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element?.product?.name}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="shop">
+                <th mat-header-cell *matHeaderCellDef>Nhà cung cấp
+                </th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                    {{element?.product?.shop}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef [innerHTML]="'product.category' | translate">
+                </th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                    {{element?.product?.category}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="brand">
+                <th mat-header-cell *matHeaderCellDef [innerHTML]="'product.brand' | translate">
+                </th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                    {{element?.product?.brand}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Giá bán cũ</th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                    {{element?.product.price | currency: element?.currency ?? "VND"}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="upPrice">
+                <th mat-header-cell *matHeaderCellDef>Giá bán mới</th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                    {{element?.upPrice | currency: element?.currency ?? "VND"}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef>Kiểu cập nhật</th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                    {{element?.typeText}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Trạng thái</th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                    <app-chip [chips]="element?.statusChips"></app-chip>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="note">
+                <th mat-header-cell *matHeaderCellDef>Ghi chú</th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                    {{element?.note}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef class="head-action" [innerHTML]="'action.title' | translate">
+                </th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="remove(element)">
+                            <mat-icon>delete</mat-icon>
+                            <span [innerHTML]="'action.delete' | translate"></span>
+                        </button>
+                    </mat-menu>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons showFirstLastButtons>
+        </mat-paginator>
+    </div>
+
+</div>

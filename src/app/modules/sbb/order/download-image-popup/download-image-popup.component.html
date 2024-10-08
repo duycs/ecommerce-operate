@@ -1,0 +1,30 @@
+<div *ngIf="data" style="background-color: white;">
+    <mat-dialog-content>
+        <h1 mat-dialog-title>{{data.title}}</h1>
+        <div mat-dialog-content>
+            <div class="confirm">
+                <div #image style="height: 100%; float: left; background-color: white;" *ngIf="data && data.list">
+                    <div style="margin: 0 auto; float: left; border: 1px solid; margin: 12px;" *ngFor="let id of data.list">
+                        <app-image-order-deliver [id]="id"></app-image-order-deliver>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="container">
+        <div class="group-btn full-width" style="padding: 0 24px;">
+            <button mat-button mat-dialog-close color="primary" (click)="close()" cdkFocusInitial>
+                {{ 'action.close' | translate}}
+            </button>
+            <div class="right">
+                <button mat-raised-button color="primary"
+                    (click)="downloadImage()">
+                    <mat-icon>download</mat-icon>
+                    <span>Tải ảnh</span>
+                    <div style="margin-left: 12px;" class=" right"></div>
+                </button>
+
+            </div>
+        </div>
+    </mat-dialog-actions>
+</div>

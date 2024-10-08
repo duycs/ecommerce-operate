@@ -1,0 +1,158 @@
+{
+    "nvarbar": {
+        "title": "SBB管理"
+    },
+    "menu": {
+        "login": "登录",
+        "register": "注册",
+        "signout": "注销",
+        "account": "账户",
+        "supplier": "供应商",
+        "seller": "卖家",
+        "product": "产品",
+        "chat": "Chat"
+    },
+    "action": {
+        "title": "动作",
+        "create": "创建",
+        "delete": "删除",
+        "delete-all": "删除所有",
+        "update": "更新",
+        "list": "列表",
+        "search": "搜索",
+        "close": "关闭",
+        "save": "保存",
+        "detail": "细节"
+    },
+    "search": {
+        "input-text": "输入文本值",
+        "choose-filter": "点击选择键和值进行过滤...",
+        "click-choose-key": "点击选择键",
+        "click-choose-value": "点击选择值",
+        "enter-choose-value": "输入选择值"
+    },
+    "register": {
+        "title": "注册",
+        "register": "注册",
+        "username": "用户名",
+        "password": "密码",
+        "fullname": "Fullname",
+        "firstname": "名字",
+        "lastname": "姓氏",
+        "address": "地址",
+        "phone": "电话",
+        "password-valid-message": "至少 6 个字符和 1 个字母字符",
+        "require-fullname": "需要全名。",
+        "require-firstname": "需要名字",
+        "require-lastname": "需要姓氏",
+        "require-address": "需要地址",
+        "require-phone": "需要电话",
+        "require-password": "需要密码",
+        "require-username": "需要用户名",
+        "require-valid-password": "需要有效密码"
+    },
+    "login": {
+        "title": "登录",
+        "login": "登录",
+        "username": "用户名",
+        "password": "密码",
+        "phone": "电话"
+    },
+    "change-password": {
+        "title": "修改密码",
+        "change": "变化",
+        "success": "修改密码成功",
+        "new-password": "新密码d",
+        "current-password": "当前密码",
+        "require-current-password": "需要当前密码",
+        "require-new-password": "需要新密码"
+    },
+    "product": {
+        "title": "产品",
+        "name": "姓名",
+        "supplier": "供应商",
+        "price": "价格",
+        "shop": "商店",
+        "sku": "斯库",
+        "brand": "品牌",
+        "unit": "单位",
+        "content": "内容",
+        "image": "图片",
+        "meta-keyword": "元关键字",
+        "meta-description": "元描述",
+        "site-title": "网站标题",
+        "child-product": "儿童产品",
+        "best-selling-product": "畅销产品",
+        "suggest-product": "推荐产品",
+        "attribute": "属性",
+        "description": "描述",
+        "trademark": "商标",
+        "category": "类别",
+        "status": "状态",
+        "madein": "制造于",
+        "product-list": "产品列表",
+        "product-detail": "产品详情",
+        "create-product": "创建产品",
+        "update-product": "更新产品",
+        "delete-product": "删除产品",
+        "update-product-status": "更新产品状态",
+        "search-product": "搜索产品",
+        "product-management": "产品管理",
+        "sell-full-size": "Sell full size",
+        "quantity": "Quantity",
+        "items": "Items"
+    },
+    "shop": {
+        "title": "商店",
+        "name": "姓名",
+        "code": "姓名",
+        "phoneNumber": "电话号码",
+        "email": "电子邮件",
+        "address": "地址"
+    },
+    "customer": {
+        "title": "客户",
+        "customer-management": "客户管理",
+        "name": "姓名",
+        "gender": "性别",
+        "phone-number": "电话号码",
+        "extra-phone-numbers": "额外电话号码",
+        "email": "电子邮件",
+        "address": "地址",
+        "dob": "出生日期"
+    },
+    "order": {
+        "title": "订单",
+        "order-management": "订单管理"
+    },
+    "report": {
+        "title": "报告"
+    },
+    "supplier": {
+        "title": "供应商",
+        "name": "供应商",
+        "register": "供应商注册",
+        "supplier-management": "供应商管理"
+    },
+    "sbb": {
+        "name": "Sbb",
+        "register": "SBB寄存器"
+    },
+    "chat": {
+        "name": "聊天",
+        "search": "搜索",
+        "search-guide": "搜索用户并开始聊天",
+        "send": "发送",
+        "message": "消息",
+        "start-chat": "请开始新的聊天或选择现有的聊天",
+        "enter-message": "输入您的信息...",
+        "view-web-chat": "在网络聊天中查看",
+        "please-message": "请发消息",
+        "mobile": "与管理员聊天"
+    },
+    "location": {
+        "district": "区",
+        "province": "省",
+        "ward": "病房"
+    }
+}

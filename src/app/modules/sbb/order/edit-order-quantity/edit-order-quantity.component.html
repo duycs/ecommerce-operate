@@ -1,0 +1,118 @@
+<div class="" *ngIf="product">
+    <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+        <mat-icon class="close-icon" color="warn">close</mat-icon>
+    </button>
+    <div class="form">
+        <h2 style="text-align: center;" mat-dialog-title>
+            Nhập số lượng
+        </h2>
+        <mat-dialog-content>
+            <div class="container">
+                <div class="row">
+                    <div class="row">
+                        <p class="head-title">Thông tin sản phẩm</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <p>Tên sản phẩm</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="label">{{product.name}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <p>Mã hàng</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="label">{{product.sku}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <p>Danh mục</p>
+                        </div>
+                        <div class="col-8">
+                            <p>{{category}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <p>Thương hiệu</p>
+                        </div>
+                        <div class="col-8">
+                            <p>{{brand}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="product.colorSizes && product.colorSizes.length > 0">
+                    <div class="row">
+                        <p class="head-title">Màu sắc</p>
+                    </div>
+                    <div class="colors">
+                        <div class="conteiner">
+                            <div class="row">
+                                <div class="col-12">
+                                    <mat-tab-group [selectedIndex]="tabSelected.value" class="full-width"
+                                        mat-stretch-tabs="false" mat-align-tabs="start">
+                                        <mat-tab *ngFor="let color of product.colorSizes; let i = index"
+                                            label="{{color.name}}">
+                                            <div class="container no-margin full-width">
+                                                <div class="row full-width" style="padding: 12px 0;">
+                                                    <div class="col-8">
+                                                        <app-input-counter class="left margin"
+                                                            *ngFor="let size of color.sizes"
+                                                            [title]="size?.size.toString()" [value]="size.quantity || 0"
+                                                            [step]="inputCounterConfig.step"
+                                                            [min]="inputCounterConfig.min"
+                                                            [max]="inputCounterConfig.max"
+                                                            [wrap]="inputCounterConfig.wrap" [id]="size.id"
+                                                            [groupId]="color.id"
+                                                            (outValue)="changeInputCounter($event)">
+                                                        </app-input-counter>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <app-input-counter class="left margin" [title]="'Nhập tất cả'"
+                                                            [value]="inputCounterConfig.value || 0"
+                                                            [step]="inputCounterConfig.step"
+                                                            [min]="inputCounterConfig.min"
+                                                            [max]="inputCounterConfig.max"
+                                                            [wrap]="inputCounterConfig.wrap" [groupId]="color.id"
+                                                            (outValue)="changeInputCounterAll($event)">
+                                                        </app-input-counter>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <div class="left" style="margin-left: 12px;">
+                                                            <p class="label">Tổng</p>
+                                                            <p>{{color.total}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </mat-tab>
+                                    </mat-tab-group>
+                                </div>
+                                <!-- <div class="">
+                                <button mat-raised-button color="primary" (click)="addColor()">
+                                    <mat-icon>add</mat-icon> Thêm màu</button>
+                            </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+
+        <mat-dialog-actions class="container">
+            <div class="group-btn">
+                <button mat-raised-button color="none" (click)="close()"><mat-icon>close</mat-icon>Hủy</button>
+                <button mat-raised-button color="primary" (click)="save()"><mat-icon>add</mat-icon>Thêm</button>
+            </div>
+        </mat-dialog-actions>
+    </div>
+</div>

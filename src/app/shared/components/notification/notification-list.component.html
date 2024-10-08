@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="chat-list mat-elevation-z5" style="height: 95vh; position: relative; top: 55px;">
+        <mat-tab-group>
+            <mat-tab label="Tất cả">
+                <!-- <div class="list" *ngIf="notifications" appScrollNearEnd (nearEnd)="onNearEndScroll()"> -->
+                <div class="list" (scroll)="onScroll($event)">
+                    <div class="item" *ngFor="let item of notifications" class="item" (click)="openPage(item)">
+                        <div class="hover-pointer">
+                            <div class="" style="width: 100%; float:left">
+                                <mat-icon *ngIf="item.key === 'delivery_order_created' 
+                                || item.key === 'order_created' 
+                                || item.key === 'sbb_order_confirmed'"
+                                    style="float: left; margin-right: 6px;">list_alt</mat-icon>
+
+                                <div *ngIf="item?.status === 2" class="last-message content" [innerHtml]="item.content">
+                                </div>
+
+                                <div *ngIf="item?.status === 1" class="last-message unread content"
+                                    [innerHtml]="item.content">
+                                </div>
+                            </div>
+                            <span class="chat-date" style="float:right; margin-top: 6px;"
+                                matTooltip="{{item.createdDate | dateDisplay: 'origin'}}" matTooltipPosition="above">
+                                {{ item.createdDate | dateDisplay }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Chưa đọc">
+                <div class="list" *ngIf="notifications" (scroll)="onUnreadScroll($event)">
+                    <div class="item" *ngFor="let item of unseenNotifications" (click)="openPage(item)">
+                        <div class="hover-pointer">
+                            <div class="" style="width: 100%; float:left">
+                                <mat-icon *ngIf="item.key === 'delivery_order_created' 
+                                || item.key === 'order_created' 
+                                || item.key === 'sbb_order_confirmed'"
+                                    style="float: left; margin-right: 6px;">list_alt</mat-icon>
+
+                                <div class="last-message unread content" [innerHtml]="item.content">
+                                </div>
+                            </div>
+                            <span class="chat-date" style="float:right; margin-top: 6px;"
+                                matTooltip="{{item.createdDate | dateDisplay: 'origin'}}" matTooltipPosition="above">
+                                {{ item.createdDate | dateDisplay }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+
+<!-- <div style="margin: 0 auto; position: absolute; right: 20px;">
+    <span *ngIf="success == true" style="color: green; z-index: 1000;" class="status-dot status-dot-animated"></span>
+    <p *ngIf="success == false" style="color: red; font-size: 16px;">{{message}}</p>
+</div> -->

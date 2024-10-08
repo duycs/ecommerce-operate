@@ -1,0 +1,51 @@
+<mat-sidenav-container *ngIf="!isOnlyShowPrintLayout">
+
+  <ngx-loading-bar [color]="'green'" [includeSpinner]="false"></ngx-loading-bar>
+
+  <app-header *ngIf="showHeader" id="header"
+    [notificationUnreadCount]="notificationSignalRService.notificationUnreadCount" (sidenavToggle)="sidenav.toggle()"
+    (sidenavChatToggle)="toggleChat()" (sidenavNotificationToggle)="toggleNotification()">
+  </app-header>
+
+  <!-- <mat-sidenav #sidenav role="navigation" >
+    <app-nav-menu (sidenavClose)="sidenav.close()"></app-nav-menu>
+  </mat-sidenav> -->
+
+  <mat-drawer-container class="example-container" [hasBackdrop]="false" style="height: 100%;"
+    [ngStyle]="{'margin-top' : marginTopHeader}">
+    <mat-drawer opened="{{isOpenSideMenu}}" #sidenav role="navigation" [mode]="'side'" position="start">
+      <div style="width: 300px; height: 100%;">
+        <app-side-menu *ngIf="isAuthenticated"></app-side-menu>
+      </div>
+    </mat-drawer>
+
+    <mat-drawer #drawerChat [mode]="'side'" position="end">
+      <div style="width: 400px; height: 100%; background-color: #fafafa;">
+        <app-chat-list (outUnreadCount)="changeUnreadCount()"
+          style="position: fixed; top: 0; right: 0; width: 428px;"></app-chat-list>
+      </div>
+    </mat-drawer>
+
+
+    <mat-drawer #drawerNotification [mode]="'side'" position="end">
+      <div style="width: 400px; height: 100%; background-color: #fafafa;">
+        <app-notification-list [notifications]="notifications" [unseenNotifications]="unseenNotifications"
+          (scrollEnd)="getMoreNotifications($event)"
+          (scrollUnseenEnd)="getMoreUnseenNotifications($event)"
+          [message]="notificationSignalRService.message"
+          [success]="notificationSignalRService.success" style="position: fixed; top: 0; right: 0; width: 428px;">
+        </app-notification-list>
+      </div>
+    </mat-drawer>
+
+    <mat-drawer-content [ngClass]="!showHeader ? 'background-white' : ''">
+      <main [ngClass]="!showHeader ? 'no-margin no-padding' : ''">
+        <router-outlet></router-outlet>
+      </main>
+    </mat-drawer-content>
+  </mat-drawer-container>
+
+</mat-sidenav-container>
+
+<router-outlet name="public"></router-outlet>
+<router-outlet *ngIf="isOnlyShowPrintLayout" name="print"></router-outlet>

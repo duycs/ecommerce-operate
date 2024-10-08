@@ -1,0 +1,82 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<mat-dialog-content [formGroup]="form">
+    <h1 mat-dialog-title>Chi tiết phiếu thanh toán công nợ</h1>
+    <div mat-dialog-content>
+        <div class="confirm">
+            <div class="container full-width no-margin">
+                <div class="row">
+                    <p class="font-medium">
+                        <mat-icon>notes</mat-icon>
+                        Mã phiếu
+                        <span class="label">{{data.billCode}}</span>
+                    </p>
+                </div>
+
+                <div class="row" fxLayoutAlign="center" fxLayout="row">
+                    <div class="col">
+                        <mat-card class="yellow" style="background: yellow;">
+                            <mat-card-content>
+                                <p class="label center font-medium">
+                                    {{data.totalMoney | currency: data?.moneyAccount.currencyType.name}}
+                                </p>
+                                <p class="">(Bằng chữ: {{textMoney}})</p>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="">Nhà cung cấp</p>
+                        <p class="label">{{data?.object.name}}</p>
+                    </div>
+                    <div class="col">
+                        <p class="">Ngày tạo phiếu</p>
+                        <p class="label">
+                            <span matTooltip="{{data.createdDate | dateDisplay:'origin'}}" matTooltipPosition="above">
+                                {{data.createdDate | dateDisplay :'origin'}}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col">
+                        <p class="">Người lập phiếu</p>
+                        <p class="label">{{data.createdBy}}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="">Công nợ trước phiếu</p>
+                        <p class="label">{{data.debtBefore | currency: data.moneyAccount?.currencyType?.name}}</p>
+                    </div>
+                    <div class="col">
+                        <p class="">Công nợ sau phiếu</p>
+                        <p class="label">{{data.debtAfter | currency: data.moneyAccount?.currencyType?.name}}</p>
+                    </div>
+                    <div class="col">
+                        <p class="">Tài khoản tiền</p>
+                        <p class="label">{{data?.moneyAccount.name}}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="">Diễn giải</p>
+                        <p class="label">{{data.description}}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions class="container">
+    <div class="group-btn">
+        <button mat-button mat-dialog-close color="primary" (click)="close()" cdkFocusInitial>
+            {{ 'action.close' | translate}}
+        </button>
+        <button mat-raised-button color="primary" (click)="okClick()" [innerHTML]="'action.save' | translate"></button>
+    </div>
+</mat-dialog-actions>

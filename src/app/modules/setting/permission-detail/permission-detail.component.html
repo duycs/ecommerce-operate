@@ -1,0 +1,47 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs" *ngIf="permissionGroup">
+    <div class="header-button-row">
+        <app-back-button [title]="'Chi tiết nhóm quyền'"></app-back-button>
+
+        <div class="action">
+            <button class="right-button" mat-raised-button color="primary" (click)="edit()">
+                <mat-icon>edit</mat-icon>
+                <span>Chỉnh sửa</span>
+            </button>
+        </div>
+    </div>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <p class="label">Thông tin nhóm quyền</p>
+                <div class="row">
+                    <div class="col">
+                        <p class="">Tên nhóm quyền: <span class="label">{{permissionGroup.name}}</span></p>
+                    </div>
+                    <div class="col">
+                        <p class="">Mã nhóm quyền: <span class="label">{{permissionGroup.code}}</span></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="">Mô tả: <span class="label">{{permissionGroup.description}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <p class="label">Danh sách quyền</p>
+
+                <div class="row" *ngFor="let group of permissionGroups">
+                    <app-checkbox-section [checkbox]="group"></app-checkbox-section>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+</div>

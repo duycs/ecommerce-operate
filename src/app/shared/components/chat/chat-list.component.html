@@ -1,0 +1,50 @@
+<div class="container">
+    <div *ngIf="!inbox" class="chat-list mat-elevation-z5" style="height: 95vh; position: relative; top: 55px;">
+        <div class="search-input" style="height: 60px;">
+            <mat-form-field>
+                <input matInput placeholder="{{ 'chat.search-guide' | translate }}" [matAutocomplete]="users"
+                    [formControl]="searchControl" />
+            </mat-form-field>
+            <mat-autocomplete #users="matAutocomplete">
+                <mat-option *ngFor="let user of users$ | async" [value]="''" (click)="createChat(user)">
+                    {{ user.displayName }}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+
+        <mat-list style="overflow: auto; height: 84vh; padding-top: 0;">
+            <div *ngIf="myChat">
+                <mat-list-item *ngFor="let chat of myChat.chats" class="item" (click)="openChat(chat)">
+                    <div class="hover-pointer">
+                        <img [src]="chat.chatPic ? chat.chatPic 
+                    : 'assets/images/image-placeholder.png'" />
+                        <div class="chat-title">
+                            <p mat-line class="chat-line">
+                                <span class="chat-name">{{ chat.chatName }}</span>
+                                <!-- <span *ngIf="chat.readed" class="last-message" mat-line>{{ chat.lastMessage }}</span> -->
+                                <span *ngIf="chat.readed" class="last-message" mat-line [innerHtml]="chat.lastMessage"> </span>
+                                <span *ngIf="!chat.readed" class="last-message" mat-line
+                                    style="font-weight: 600; color:green">{{ chat.lastMessage }}</span>
+                            </p>
+                            <p class="chat-date" matTooltip="{{chat.lastMessageDate | dateDisplay:'origin'}}"
+                                matTooltipPosition="above">
+                                {{ chat.lastMessageDate | dateDisplay }}
+                            </p>
+                        </div>
+                    </div>
+                </mat-list-item>
+            </div>
+        </mat-list>
+
+        <div style="text-align: center; margin: 0 auto; position: absolute; bottom: 0; width: 100%; background-color: white;">
+            <a class="hover-pointer no-underline" href="/chats/web">
+                <p>{{ 'chat.view-web-chat' | translate }}</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="chat-box" *ngIf="inbox">
+        <app-chat-box (outCloseInbox)="closeInbox($event)" (outOpenInbox)="openInbox($event)" [friend]="friend">
+        </app-chat-box>
+    </div>
+</div>

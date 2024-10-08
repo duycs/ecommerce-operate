@@ -1,0 +1,8 @@
+<button mat-button [matMenuTriggerFor]="menu">{{name}}</button>
+<mat-menu #menu="matMenu" class="mat-menu-test">
+    <button *ngFor = "let item of items" mat-menu-item>
+        <a  class="hover-pointer no-underline" href="{{item.url}}">
+            <p>{{item.name}}</p>
+        </a>
+    </button>
+</mat-menu>

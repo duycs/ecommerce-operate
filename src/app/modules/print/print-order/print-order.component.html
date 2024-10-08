@@ -1,0 +1,216 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs">
+  <div class="print-box" *ngIf="orderDetail">
+    <div class="">
+      <div class="container no-margin ">
+        <div class="row">
+          <div class="col-12">
+
+            <div class="row">
+              <div class="col">
+                <p class="">
+                  Liên hệ SBB:
+                </p>
+              </div>
+              <div class="col">
+                <p class="value label">0335.73.6969</p>
+              </div>
+              <div class="col">
+                <p class="right">
+                  {{ 'order.code' | translate}}
+                </p>
+              </div>
+              <div class="col">
+                <p class="value label right">{{orderDetail.detail.code}}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <p class="">
+                  Khách hàng:
+                </p>
+              </div>
+              <div class="col">
+                <p class="value label">{{orderDetail.detail.customerName}}</p>
+              </div>
+              <div class="col">
+                <p class="right">
+                  Ngày tạo đơn:
+                </p>
+              </div>
+              <div class="col">
+                <p class="value label right">{{orderDetail.detail.orderDate | dateDisplay :'origin'}}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <p class="">
+                  Số điện thoại:
+                </p>
+              </div>
+              <div class="col">
+                <p class="value label">{{orderDetail.detail.customerPhoneHidden}}</p>
+              </div>
+
+              <div class="col">
+                <p class="right">
+                  Thời gian in:
+                </p>
+              </div>
+              <div class="col">
+                <p class="value label right">{{ current | dateDisplay :'origin'}}
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3">
+                <p class="">
+                  Địa chỉ:
+                </p>
+              </div>
+              <div class="col-9">
+                <p class="value label">{{orderDetail.detail.shippingAddressName}}</p>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <p class="">
+                  Nhân viên:
+                </p>
+              </div>
+              <div class="col">
+                <p class="value label">{{orderDetail.detail.staffName}} <span
+                    *ngIf="orderDetail.detail.staffPhone">-</span> <span>{{orderDetail.detail.staffPhone
+                    }}</span></p>
+              </div>
+              <div class="col">
+                <p class="right">
+                  Số toa:
+                </p>
+              </div>
+              <div class="col">
+                <p class="value label right">{{orderDetail.detail.orderNumber}}</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="" *ngFor="let item of orderDetail.supplierOrders">
+      <div class="">
+        <div class="print-box">
+          <div class="container no-margin ">
+            <div class="row">
+              <div class="table" style="max-width: 297px;" *ngIf="item.products">
+                <app-print-order-detail-item style="max-width: 297px;" [products]="item.products"></app-print-order-detail-item>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container no-margin  right">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-4">
+            <p class="">
+              Nợ trước:
+            </p>
+          </div>
+          <div class="col-2">
+            <p class="value label">{{orderDetail.detail.customerDebt | currency:
+              orderDetail.detail.customerCurrency ?? 'VND'}}</p>
+          </div>
+          <div class="col-4">
+            <p class="right">
+              Tổng số lượng:
+            </p>
+          </div>
+          <div class="col-2">
+            <p class="value label right">{{orderDetail.detail.totalQuantity}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-4">
+            <p class="">
+              Khách hàng thanh toán:
+            </p>
+          </div>
+          <div class="col-2">
+            <p class="value label">{{orderDetail.detail?.customerPaid | currency:
+              orderDetail.detail.customerCurrency ?? 'VND'}}</p>
+          </div>
+
+          <div class="col-4">
+            <p class="right">
+              Tổng tiền nguyên giá:
+            </p>
+          </div>
+          <div class="col-2">
+            <p class="value label right">{{orderDetail.detail?.totalPrice | currency:
+              orderDetail.detail.customerCurrency ?? 'VND'}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-4">
+            <p class="">
+              Nợ sau:
+            </p>
+          </div>
+          <div class="col-2">
+            <p class="value label">{{orderDetail.detail?.customerDebtAfter | currency:
+              orderDetail.detail.customerCurrency ?? 'VND'}}</p>
+          </div>
+
+          <div class="col-4">
+            <p class="right">
+              Chiết khấu trên sản phẩm:
+            </p>
+          </div>
+          <div class="col-2">
+            <p class="value label right">{{orderDetail.detail?.discountProduct | currency:
+              orderDetail.detail.customerCurrency ?? 'VND'}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-4"> </div>
+          <div class="col-2"> </div>
+          <div class="col-4">
+            <p class="right">
+              Chiết khấu trên đơn:
+            </p>
+          </div>
+          <div class="col-2">
+            <p class="value label right">{{orderDetail.detail?.discountOrder | currency:'VND'}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-4"> </div>
+          <div class="col-2"></div>
+          <div class="col-4">
+            <p class="right">
+              Thành tiền:
+            </p>
+          </div>
+          <div class="col-2">
+            <p class="value label right">{{orderDetail.detail.totalPriceAfterDiscount |
+              currency:'VND'}}
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

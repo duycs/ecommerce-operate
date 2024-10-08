@@ -1,0 +1,85 @@
+<div style="position: fixed;top: 55px;width: 83%;">
+  <div class="chat-list mat-elevation-z5" style="height: 94vh; width: 30%; float: left;">
+    <div class="search-input">
+      <mat-form-field>
+        <input matInput placeholder="{{ 'chat.search-guide' | translate }}" [matAutocomplete]="users"
+          [formControl]="searchControl" />
+      </mat-form-field>
+      <mat-autocomplete #users="matAutocomplete">
+        <mat-option *ngFor="let user of users$ | async" [value]="''" (click)="createChat(user)">
+          {{ user.displayName }}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+    <mat-selection-list [multiple]="false">
+      <div *ngIf="myChat">
+        <mat-list-option *ngFor="let chat of myChat.chats" class="item" [value]="chat.id" (click)="openChat(chat)"
+          style="margin: 0; padding: 12px 12px;">
+          <div class="hover-pointer">
+            <img matListAvatar [src]="chat.chatPic ? chat.chatPic 
+                  : 'assets/images/image-placeholder.png'" />
+            <div class="chat-title">
+              <p mat-line class="chat-line">
+                <!-- <span *ngIf="chat.readed" class="last-message" mat-line>{{ chat.lastMessage }}</span> -->
+                <span *ngIf="chat.readed" class="last-message" mat-line [innerHtml]="chat.lastMessage"> </span>
+                <span *ngIf="!chat.readed" class="last-message" mat-line style="font-weight: 600; color:green">{{
+                  chat.lastMessage }}</span>
+              </p>
+              <span class="chat-name-on-list">{{ chat.chatName }}</span>
+              <p class="chat-date" matTooltip="{{chat.lastMessageDate | dateDisplay:'origin'}}"
+                matTooltipPosition="above">
+                {{ chat.lastMessageDate | dateDisplay }}
+              </p>
+            </div>
+          </div>
+        </mat-list-option>
+      </div>
+    </mat-selection-list>
+  </div>
+
+  <div class="messages mat-elevation-z5" style="height: 94vh; width: 70%; float: left; position: relative; box-shadow: none;
+  border-left: 1px solid lightgrey;">
+    <div class="messages-header" *ngIf="selectedChat; else noChatSelected"
+      style="background-color: #4caf50; padding: 8px; margin: 0;">
+      <img [src]="
+          selectedChat.chatPic
+            ? selectedChat.chatPic
+            : 'assets/images/image-placeholder.png'" />
+      <span style="color: white; font-size: 18px; font-weight: 600; margin-top: 6px;">{{ selectedChat.chatName }}</span>
+    </div>
+    <ng-template #noChatSelected style="padding: 8px; margin: 0;">
+      <span style="float: left; width: 100%; padding: 14px; font-size: 18px; font-weight: 600;">{{ 'chat.message' |
+        translate }}</span>
+    </ng-template>
+    <mat-divider style="float: left; width: 100%;"></mat-divider>
+    <div class="chat-area">
+      <div *ngIf="!isSelected" style="text-align: center; margin: 0 auto;">
+        <p>{{ 'chat.start-chat' | translate }}</p>
+      </div>
+      <ng-container *ngIf="currentUser">
+        <ng-container *ngIf="messages">
+          <div class="chat-bubble-container" [ngClass]="{ sender: message.senderId === currentUser.uid }"
+            *ngFor="let message of messages">
+            <div class="chat-bubble">
+              <!-- {{ message.text }} -->
+              <div *ngIf="message.text" [innerHtml]="message.text"> </div>
+              <span class="chat-name">{{ message.senderName }}</span>
+              <span class="chat-time" matTooltip="{{message.sentDate | dateDisplay:'origin'}}"
+                matTooltipPosition="above">{{ message.sentDate | dateDisplay }}</span>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+      <div #endOfChat></div>
+    </div>
+    <div class="input-area" style="position: absolute; bottom: 0; width: 100%; left: 0; padding: 0;">
+      <mat-form-field appearance="fill">
+        <input matInput placeholder="{{ 'chat.enter-message' | translate}}" [formControl]="messageControl"
+          (keydown.enter)="sendMessage()" (click)="clickAsReaded()" />
+        <button mat-icon-button matSuffix (click)="sendMessage()">
+          <mat-icon>send</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </div>
+</div>

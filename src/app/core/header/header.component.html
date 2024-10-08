@@ -1,0 +1,95 @@
+<mat-toolbar *ngIf="hasPermission" class="mat-elevation-z6" color="primary" style="padding-left: 0px; position: fixed; top: 0; left: 0; right: 0; z-index: 100;">
+  <div fxHide.gt-xs>
+    <button *ngIf="isAuthenticated" mat-icon-button (click)="onToggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+  <div class="menu right-menu" fxLayout="row" fxLayoutAlign="start center" fxHide.xs>
+    <ul *ngIf="isAuthenticated" style="float: left" fxLayout fxLayoutGap="15px" class="navigation-items">
+      <li style="margin-top: 0">
+        <a routerLink="/">
+          <div class="logo">
+            <img style="height: 40px;" src="./assets/images/logo-sbb.png">
+            <span class="" style="color: black; margin-left: 25px;">Hệ thống Vận Hành Sàn Bán Buôn</span>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="menu" fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+
+    <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+      <li *ngIf="false">
+        <div class="hover-pointer" style="margin-left: 12px;">
+          <span class="fi fi-vn me-2" (click)="changeLanguage('vn')"></span>
+          <span class="fi fi-cn me-2" (click)="changeLanguage('cn')"></span>
+          <span class="fi fi-us me-2" (click)="changeLanguage('us')"></span>
+        </div>
+      </li>
+
+      <li *ngIf="!isAuthenticated">
+        <a href="/register?role=sbb">
+          <p [innerHTML]="'menu.register' | translate"></p>
+        </a>
+      </li>
+      <li *ngIf="!isAuthenticated">
+        <a>
+          <p class="hover-pointer" (click)="login()" [innerHTML]="'menu.login' | translate"></p>
+        </a>
+      </li>
+
+    </ul>
+
+    <ul *ngIf="isAuthenticated" fxLayout fxLayoutGap="15px" class="navigation-items">
+
+      <li class="user">
+        <div [matBadgeHidden]="true" matBadge="{{notificationUnreadCount}}" matBadgeOverlap="false"
+          class="demo-section">
+          <div class="account hover-pointer" style="margin-bottom: 6px;" [matMenuTriggerFor]="menu">
+            <span class="" style="margin-left: 5px;">{{name}}
+              <mat-icon style="padding-top: 6px;">keyboard_arrow_down</mat-icon>
+            </span>
+            <div mat-card-avatar id="avatar-header-image">
+              <img *ngIf="profilePhotoUrl" src="{{profilePhotoUrl}}">
+              <mat-menu #menu="matMenu" class="mat-menu-test">
+                <button mat-menu-item (click)="gotoProfile()">{{name}}</button>
+                <button mat-menu-item (click)="signout()" [innerHTML]="'menu.signout' | translate"></button>
+                <button mat-menu-item (click)="changePassword()"
+                  [innerHTML]="'change-password.title' | translate"></button>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="notification" style="margin-left: 20px;">
+        <div [matBadgeHidden]="notificationUnreadCount == 0" matBadge="{{notificationUnreadCount}}" matBadgeOverlap="false"
+          class="demo-section">
+          <button class="message circle-button" mat-icon-button matSuffix (click)="onToggleSideNavNotification()">
+            <mat-icon class="circle-border" style="color: white;">notifications</mat-icon>
+          </button>
+        </div>
+      </li>
+
+      <li *ngIf="showChat">
+        <div [matBadgeHidden]="chatUnreadCount == 0" matBadge="{{chatUnreadCount}}" matBadgeOverlap="false"
+          class="demo-section">
+          <button class="message circle-button" mat-icon-button matSuffix (click)="onToggleSideNavChat()">
+            <mat-icon class="circle-border" style="color: white;">message</mat-icon>
+          </button>
+        </div>
+      </li>
+
+      <li *ngIf="!isChatAdmin" style="margin-right: 12px;">
+        <a href="/chats/mobile?id={{name}}&name={{name}}">
+          <p [innerHTML]="'chat.mobile' | translate"></p>
+        </a>
+      </li>
+    </ul>
+
+
+  </div>
+
+</mat-toolbar>

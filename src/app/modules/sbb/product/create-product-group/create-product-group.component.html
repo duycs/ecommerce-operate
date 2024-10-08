@@ -1,0 +1,230 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs" [formGroup]="form">
+    <div class="header-button-row">
+        <app-back-button [title]="'Tạo mới nhóm sản phẩm'" [real]="'done'"></app-back-button>
+        <div class="create-delivery-order action ">
+            <button class="right-button" mat-raised-button color="primary" (click)="save()">
+                <mat-icon>save</mat-icon>
+                <span>Lưu</span>
+            </button>
+        </div>
+    </div>
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container full-width no-margin">
+                <div class="row">
+                    <div class="col">
+                        <app-input-search [label]="'Tên nhóm sản phẩm'" [placeholder]="''" [data]="productGroups"
+                            [field]="'name'" [value]="''" (output)="outputName($event)"></app-input-search>
+                    </div>
+                    <div class="col">
+                        <app-input-search [label]="'Mã'" [placeholder]="suggestCode" [data]="productGroups"
+                            [field]="'code'" [value]="suggestCode" (output)="outputCode($event)"></app-input-search>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="editor full-width">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Mô tả</mat-label>
+                            <textarea matInput placeholder="..." formControlName="description"></textarea>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <p class="label">Trạng thái</p>
+                    <mat-radio-group aria-label="Trạng thái" formControlName="visible">
+                        <mat-radio-button value="true">Hoạt động</mat-radio-button>
+                        <mat-radio-button value="false">Không hoạt động</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container full-width">
+                <p class="label full-width">Thêm sản phẩm vào nhóm</p>
+
+                <div class="row">
+                    <div class="col">
+                        <app-input-search-dropdown [label]="'Tên sản phẩm'" [placeholder]="''" [data]="products"
+                            [field]="'name'" [value]="''" (output)="searchProduct($event)"
+                            (outChoose)="selectProduct($event)">
+                        </app-input-search-dropdown>
+                    </div>
+
+                    <div class="col">
+                        <app-input-search-dropdown [label]="'Tên danh mục'" [placeholder]="''" [pinValue]="true"
+                            [data]="productCategories" [field]="'name'" [value]="''" (output)="searchCategory($event)"
+                            (outChoose)="selectCategory($event)">
+                        </app-input-search-dropdown>
+                    </div>
+
+                    <div class="col">
+                        <app-input-search-dropdown [label]="'Tên NCC'" [placeholder]="''" [data]="shops"
+                            [field]="'name'" [value]="''" (output)="searchShop($event)"
+                            (outChoose)="selectShop($event)">
+                        </app-input-search-dropdown>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table mat-table class="jobs-table mat-elevation-z8" [dataSource]="productSelectedDataSource" matSort
+                    matSortActive="id" matSortDirection="asc" matSortDisableClear>
+
+                    <ng-container matColumnDef="numbericalOrder">
+                        <th mat-header-cell *matHeaderCellDef>STT </th>
+                        <!-- <td mat-cell *matCellDef="let element; let i = index;">
+                                {{paginator.pageSize*paginator.pageIndex + i + 1}} </td> -->
+                        <td mat-cell *matCellDef="let element; let i = index;">
+                            {{ i + 1}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="image">
+                        <th mat-header-cell *matHeaderCellDef>Ảnh </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="image" *ngIf="element.image">
+                                <img style="width: 50px;" src="{{element?.image}}">
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name" sticky>
+                        <th mat-header-cell *matHeaderCellDef>Tên sản phẩm
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <a class="hover-pointer no-underline" href="/sbb/products/{{element.id}}">
+                                <span class="left full-width">{{element.name}}</span>
+                            </a>
+                            <span class="left full-width">{{element.sku}}</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="shop">
+                        <th mat-header-cell *matHeaderCellDef>Nhà cung cấp
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <a class="hover-pointer no-underline" href="/sbb/shops/{{element.shopId}}">
+                                {{element.shop}}
+                            </a>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="category">
+                        <th mat-header-cell *matHeaderCellDef>Danh mục
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <a class="hover-pointer no-underline" href="/sbb/product-categories/{{element.categoryId}}">
+                                {{element.category}}
+                            </a>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="brand">
+                        <th mat-header-cell *matHeaderCellDef>Thương hiệu
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.brand}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="originPrice">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Giá nhập
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span>{{element.originPrice | currency: element.currency ?? 'VND'}}</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="minPrice">
+                        <th mat-header-cell *matHeaderCellDef>Giá gốc</th>
+                        <td mat-cell *matCellDef="let element">
+                            <span *ngIf="element.minPrice > 0">{{element.minPrice | currency: element.currency ??
+                                'VND'}}</span>
+                            <app-chip *ngIf="element.applyProductPriceSettingChips"
+                                [chips]="element.applyProductPriceSettingChips"></app-chip>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="autoProductPrice">
+                        <th mat-header-cell *matHeaderCellDef>Tính giá tự động</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-checkbox class="example-margin"
+                                [checked]="element?.applyTemplateSettings && element?.applyTemplateSettings?.length > 0"
+                                [disabled]="true"></mat-checkbox>
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="newPrice">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Giá bán
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span>{{element.maxPrice | currency: element.currency ?? 'VND'}}</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="language">
+                        <th mat-header-cell *matHeaderCellDef>Phiên bản đa ngôn ngữ</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.language ?? "Việt Nam"}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="autoApprove">
+                        <th mat-header-cell *matHeaderCellDef>Duyệt tự động</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-checkbox class="example-margin" [checked]="element?.autoApprove ?? false"
+                                [disabled]="true"></mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="activeStatus">
+                        <th mat-header-cell *matHeaderCellDef>Trạng thái hoạt động</th>
+                        <td mat-cell *matCellDef="let element">
+                            <app-chip [chips]="element.statusChips"></app-chip>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="approveStatus">
+                        <th mat-header-cell *matHeaderCellDef>Trạng thái phê duyệt</th>
+                        <td mat-cell *matCellDef="let element">
+                            <app-chip [chips]="element.approveChips"></app-chip>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action" sticky>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="head-action"
+                            [innerHTML]="'action.title' | translate">
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-icon-button [matMenuTriggerFor]="menu"
+                                aria-label="Example icon-button with a menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="removeProduct(element)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span [innerHTML]="'action.delete' | translate"></span>
+                                </button>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="productDisplayColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: productDisplayColumns;"></tr>
+                </table>
+                <!-- <mat-paginator [length]="this.productSelectedDataSource.data.length" [pageIndex]="0" [pageSize]="10"
+                        [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons (page)="handlePageEvent($event)">
+                    </mat-paginator> -->
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

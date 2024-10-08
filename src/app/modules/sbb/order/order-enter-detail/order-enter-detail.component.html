@@ -1,0 +1,205 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs">
+  <div class="header-button-row">
+    <app-back-button [title]="'Chi tiết đơn nhập hàng NCC'" [real]="'doing'"></app-back-button>
+
+    <!--<div class="create-delivery-order action ">
+            <button class="right-button" mat-raised-button color="accent" (click)="edit()">
+                <mat-icon>edit</mat-icon>
+                <span>Chỉnh sửa</span>
+            </button>
+        </div>-->
+  </div>
+
+  <div *ngIf="orderDetail">
+    <mat-card class="full-width">
+      <mat-card-header> </mat-card-header>
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <div class="col-8">
+              <div class="title">
+                <p class="label">Thông tin đơn nhập hàng</p>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <p class="">Mã đơn chuyển hàng</p>
+                </div>
+                <div class="col">
+                  <p class="value label">
+                    <a class="hover-pointer no-underline" href="/sbb/order-transfers/{{orderDetail?.deliveryOrderId}}">
+                      {{ orderDetail?.deliveryOrder.code }}
+                    </a>
+                  </p>
+                </div>
+                <div class="col">
+                  <p class="">Thời gian tạo đơn chuyển</p>
+                </div>
+                <div class="col">
+                  <p class="value">{{ orderDetail?.deliveryOrder.createdDate | dateDisplay : "origin" }}</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <p class="">Mã đơn nhập hàng</p>
+                </div>
+                <div class="col">
+                  <p class="value label">{{ orderDetail.code }}</p>
+                </div>
+                <div class="col">
+                  <p class="">Thời gian tạo đơn nhập</p>
+                </div>
+                <div class="col">
+                  <p class="value">{{ orderDetail.createdDate | dateDisplay : "origin" }}</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <p class="">Nhân viên</p>
+                </div>
+                <div class="col">
+                  <p class="value label">{{ orderDetail.staffName }}</p>
+                </div>
+                <div class="col">
+                  <p class="">Trạng thái đơn chuyển</p>
+                </div>
+                <div class="col">
+                  <app-chip [chips]="orderDetail.deliveryOrderStatusChips"></app-chip>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <p class="">Nhà cung cấp</p>
+                </div>
+                <div class="col">
+                  <a class="hover-pointer no-underline" href="/sbb/shops/{{orderDetail?.shopId}}">
+                    <p class="value">{{ orderDetail.shopName }}</p>
+                  </a>
+                </div>
+                <div class="col">
+                  <p class="">Trạng thái sản phẩm</p>
+                </div>
+                <div class="col">
+                  <app-chip [chips]="orderDetail.quantityStatusChips"></app-chip>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-3">
+                  <p class="">Nhà vận chuyển</p>
+                </div>
+                <div class="col">
+                  <a class="hover-pointer no-underline"
+                    href="/sbb/transporters/{{orderDetail?.deliveryOrder.transporterId}}">
+                    <p class="value">{{ orderDetail?.deliveryOrder.transporterName }}</p>
+                  </a>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-3">
+                  <mat-icon style="float: left; margin-right: 6px">notes</mat-icon>
+                  <p class="left" style="margin-right: 6px">Ghi chú của NCC:</p>
+                </div>
+                <div class="col">
+                  <p class="value">{{ orderDetail?.deliveryOrder.note }}</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-3">
+                  <p class="left">Ghi chú của nhân viên:</p>
+                </div>
+                <div class="col">
+                  <p class="value">{{ orderDetail.note }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="title">
+                <p class="label">Số lượng</p>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <p class="">Tổng số lượng chuyển</p>
+                </div>
+                <div class="col">
+                  <p class="value label">{{ orderDetail?.deliveryOrder.quantity }}</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <p class="">Tổng số lượng trên đơn</p>
+                </div>
+                <div class="col">
+                  <p class="value label">{{ orderDetail.importedQuantity }}</p>
+                </div>
+              </div>
+
+              <!-- <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Tổng số lượng nhập thêm
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.totalQuantity}}</p>
+                                </div>
+                            </div> -->
+
+              <!-- <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Tổng số lượng nhập/chuyển
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">
+                                        {{orderDetail.quantity}}/{{orderDetail.deliveryOrder.quantity}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Tổng giá trị nhập/chuyển
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.totalPrice |
+                                        currency:'VND'}}
+                                        /{{orderDetail?.deliveryOrder.totalPrice | currency:'VND'}}
+                                    </p>
+                                </div>
+                            </div> -->
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <br />
+
+    <span class="head-title">Danh sách sản phẩm</span>
+
+    <div class="products">
+      <mat-card class="full-width">
+        <mat-card-content>
+          <div class="container no-margin full-width">
+            <div class="row">
+              <div class="table" *ngIf="orderDetail.products">
+                <app-order-detail-item [showQuantityStatus]="false" [screen]="'order-enter'"
+                  [products]="orderDetail.products" [notDisplayedColumns]="notDisplayedColumns"></app-order-detail-item>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

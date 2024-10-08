@@ -1,0 +1,83 @@
+<div *ngIf="admin">
+  <!-- <app-chat-box [friend]="admin" [showHeader]="false">
+  </app-chat-box> -->
+
+  <div [ngClass]="showHeader ? 'messages mat-elevation-z5' : 'messages'">
+    <div class="messages-header" *ngIf="showHeader">
+      <div style="width: 100%; float: left;">
+        <img matListAvatar [src]="admin.chatPic ? admin.chatPic 
+        : 'assets/images/image-placeholder.png'" />
+        <p style="font-weight: 600; font-size: 16px; margin-top: 4px;" *ngIf="admin">{{ admin.name }}</p>
+      </div>
+      <button mat-icon-button matSuffix style="float: right;" (click)="close(admin)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <mat-divider *ngIf="showHeader"></mat-divider>
+    <div [ngClass]="showHeader ? 'chat-area' : 'chat-area-web'" style="height: 94vh;">
+      <ng-container *ngIf="currentUser">
+        <!-- <ng-container *ngIf="messages$ | async as messages"> -->
+        <div *ngIf="!messages || messages.length == 0" class="please-message"><span>{{'chat.please-message' |
+            translate}}</span></div>
+        <ng-container *ngIf="messages">
+          <div class="chat-bubble-container" [ngClass]="{ sender: message.senderId === currentUser.uid }"
+            *ngFor="let message of messages">
+            <div class="chat-bubble">
+              <!-- {{ message.text }} -->
+              <div *ngIf="message.text" [innerHtml]="message.text"> </div>
+              <span class="chat-name">{{ message.senderName }}</span>
+              <span class="chat-time">
+                {{ message.sentDate | dateDisplay }}</span>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+      <div #endOfChat></div>
+    </div>
+
+    <div class="actions" style="position: absolute; left:0; bottom: 0; width: 100%;">
+      <div class="input-area">
+        <mat-form-field appearance="fill" style="margin-bottom: -1.45em">
+          <input matInput placeholder="{{'chat.enter-message' | translate}}" [formControl]="messageControl"
+            (keydown.enter)="sendMessage(admin)" (click)="clickAsReaded(admin)" />
+
+          <button *ngIf="action == 'text'" mat-icon-button matSuffix (click)="sendMessage(admin)">
+            <mat-icon>send</mat-icon>
+          </button>
+
+          <button *ngIf="action != 'text'" mat-icon-button matSuffix (click)="clickMoreActions()">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <button *ngIf="action != 'text'" mat-icon-button matSuffix matTooltip="Gửi file" matTooltipPosition="above">
+            <input type="file" #file placeholder="Chọn file" (change)="takePicture(admin)" style="display:none;"
+              multiple>
+            <mat-icon>camera_alt</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="moreAction && action != 'text'" class="more-actions" style="background-color: white;">
+        <mat-grid-list cols="4" rowHeight="2:1">
+          <mat-grid-tile>
+            <button mat-icon-button matSuffix (click)="fileMedia.click()" matTooltip="Gửi ảnh"
+              matTooltipPosition="above">
+              <input type="file" accept="file_extension|audio/*|video/*|image/*|media_type" #fileMedia
+                placeholder="Chọn file" (change)="uploadFiles(admin, fileMedia.files)" style="display:none;" multiple>
+              <mat-icon>image</mat-icon>
+            </button>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <button mat-icon-button matSuffix (click)="file.click()" matTooltip="Gửi file" matTooltipPosition="above">
+              <input type="file" #file placeholder="Chọn file" (change)="uploadFiles(admin, file.files)"
+                style="display:none;" multiple>
+              <mat-icon>attach_file</mat-icon>
+            </button>
+          </mat-grid-tile>
+
+        </mat-grid-list>
+      </div>
+    </div>
+
+  </div>
+</div>

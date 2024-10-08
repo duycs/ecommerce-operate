@@ -1,0 +1,81 @@
+<mat-dialog-content *ngIf="orderDetail && orderDetail.detail">
+    <h1 mat-dialog-title>Chi tiết số lượng đơn hàng {{orderDetail.detail.code}} của {{orderDetail.detail.customerName}}
+    </h1>
+    <div mat-dialog-content *ngIf="orderDetail">
+        <div class="confirm">
+            <div class="" *ngFor="let item of orderDetail.supplierOrders">
+                <mat-card class="full-width" style="min-width: 1024px;">
+                    <mat-card-content>
+                        <div class="container no-margin full-width">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="label">
+                                        {{item.code}}
+                                    </p>
+                                    <span>{{item.createdDate | dateDisplay :'origin'}}</span>
+                                </div>
+                                <div class="col">
+                                    <p>Nhà cung cấp</p>
+                                    <p class="label">
+                                        {{item.shopName}}
+                                    </p>
+                                </div>
+
+                                <div class="col">
+                                    <p>Trạng thái đơn</p>
+                                    <p class="label">
+                                        <app-chip [chips]="item.processStatusChips"></app-chip>
+                                    </p>
+                                </div>
+
+                                <div class="col">
+                                    <p>Đã giao/Đặt hàng</p>
+                                    <div class="statistic-ratio">
+                                        <span
+                                            class="information">{{item.quantityDelivered}}/{{item.quantityOrdered}}</span>
+                                        <section class="example-section">
+                                            <mat-progress-bar class="example-margin"
+                                                [ngClass]="item.quantiyDeliverRatioColorClass" mode="determinate"
+                                                [value]="item.quantiyDeliverRatio"></mat-progress-bar>
+                                        </section>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <p>Sẵn hàng/Còn thiếu</p>
+                                    <div class="statistic-ratio">
+                                        <span class="information">
+                                            <span class="label">{{item.quantityInStock}}</span>/ <span
+                                                class="label red">{{ item.quantityOrdered - item.quantityDelivered
+                                                }}</span>
+                                        </span>
+                                        <section class="example-section">
+                                            <mat-progress-bar class="example-margin"
+                                                [ngClass]="item.quantityProductRatioColorClass" mode="determinate"
+                                                [value]="item.quantityProductRatio">
+                                            </mat-progress-bar>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="table" *ngIf="item.products">
+                                    <app-order-detail-item-quantity
+                                        [products]="item.products"></app-order-detail-item-quantity>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions class="container">
+    <div class="group-btn">
+        <button mat-button mat-dialog-close color="primary" (click)="close()" cdkFocusInitial>
+            {{ 'action.close' | translate}}
+        </button>
+    </div>
+</mat-dialog-actions>

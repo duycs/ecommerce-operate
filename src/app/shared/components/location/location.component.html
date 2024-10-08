@@ -1,0 +1,28 @@
+<form [formGroup]="form">
+    <mat-form-field class="input" appearance="fill">
+        <mat-label>Tỉnh</mat-label>
+        <mat-select required (selectionChange)="loadDistricts()" formControlName="provinceId">
+            <mat-option *ngFor="let province of provinces" [value]="province.id">
+                {{province.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="input" appearance="fill">
+        <mat-label>Quận huyện</mat-label>
+        <mat-select required (selectionChange)="loadWards()" formControlName="districtId">
+            <mat-option *ngFor="let district of districts" [value]="district.id">
+                {{district.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="input" appearance="fill">
+        <mat-label>Thị xã, thị trấn</mat-label>
+        <mat-select required (selectionChange)="selectWard()" formControlName="wardId">
+            <mat-option *ngFor="let ward of wards" [value]="ward.id">
+                {{ward.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>

@@ -1,0 +1,15 @@
+<div class="row full-width" style="margin-bottom:15px; z-index: 100;">
+    <div class="col-md-3">
+      <input type="file" #file placeholder="Chọn file" (change)="uploadFiles(file.files)" style="display:none;"
+        multiple>
+      <button style="z-index:100" mat-raised-button color="primary" (click)="file.click()">{{buttonName}}</button>
+    </div>
+    <div class="col-md-4">
+      <span class="upload" *ngIf="progress > 0 && progress < 100">
+        <mat-progress-bar style="margin: 12px;" mode="indeterminate"></mat-progress-bar>
+      </span>
+      <span class="red" *ngIf="message">
+        {{message}}
+      </span>
+    </div>
+  </div>

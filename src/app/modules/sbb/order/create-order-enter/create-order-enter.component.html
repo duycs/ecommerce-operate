@@ -1,0 +1,226 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs">
+    <div class="header-button-row">
+        <app-back-button [title]="'Tạo đơn nhập hàng NCC'" [real]="'doing'"></app-back-button>
+
+        <div class="create-delivery-order action ">
+            <button class="right-button" mat-raised-button color="primary" (click)="save()">
+                <mat-icon>save</mat-icon>
+                <span>Lưu</span>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="orderDetail">
+        <div class="form" [formGroup]="form">
+            <mat-card class="full-width">
+                <mat-card-header>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="container no-margin full-width">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="title">
+                                    <p class="label">Thông tin đơn chuyển hàng</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="">
+                                            Mã đơn chuyển hàng
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="value label">{{orderDetail?.code}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="">
+                                            Thời gian tạo đơn chuyển
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="value">{{orderDetail?.createdDate | dateDisplay :'origin'}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="">
+                                            Nhân viên
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="value label">{{orderDetail.staffName}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="">
+                                            Trạng thái đơn
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <app-chip [chips]="orderDetail.importReceiptStatusChips"></app-chip>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="">
+                                            Nhà cung cấp
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="label">{{orderDetail?.shopName}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="">
+                                            Trạng thái sản phẩm
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <app-chip [chips]="orderDetail?.quantityStatusChips"></app-chip>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-3">
+                                        <p class="">
+                                            Nhà vận chuyển
+                                        </p>
+                                    </div>
+                                    <div class="col-3">
+                                        <p class="value label">{{orderDetail.deliverName}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <mat-icon style="float: left; margin-right: 6px;">notes</mat-icon>
+                                        <p class="left" style="margin-right: 6px;">
+                                            Ghi chú của NCC:
+                                        </p>
+                                        <p class="value">{{orderDetail?.supplierNote}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="">
+                                            Ghi chú của nhân viên
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <mat-form-field>
+                                        <input matInput placeholder="" formControlName="staffNote">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="title">
+                                    <p class="label">Số lượng</p>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="">
+                                            Tổng số lượng chuyển
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="value label">{{orderDetail.quantity}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="">
+                                            Tổng số lượng đã nhập
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="value label">{{orderDetail.importedQuantity}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="">
+                                            Tổng số lượng nhập thêm
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="value label">{{totalQuantityUpdated}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="">
+                                            Tổng số lượng nhập/chuyển
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="value label">
+                                            {{totalQuantityUpdated +
+                                            orderDetail.importedQuantity}}/{{orderDetail?.quantity}}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="row" *ngIf="false">
+                                    <div class="col">
+                                        <p class="">
+                                            Tổng giá trị nhập/chuyển
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="value label">{{orderDetail.totalPrice |
+                                            currency:'VND'}}
+                                            /{{orderDetail.totalPriceAfterDiscount | currency:'VND'}}
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <br>
+
+            <span class="head-title">Danh sách sản phẩm</span>
+
+            <div class="">
+                <mat-card class="full-width">
+                    <mat-card-content>
+                        <div class="container no-margin full-width">
+                            <div class="row">
+                                <div class="col-12">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Chọn sản phẩm để nhập số lượng</mat-label>
+                                        <mat-select formControlName="productId" id="productId">
+                                            <mat-option *ngFor="let product of orderDetail.products"
+                                                (click)="editProduct()" [value]="product.id">
+                                                <span *ngIf="product.name">{{product?.name}}</span>
+                                                <span *ngIf="product.sku"> {{product?.sku}}</span>
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="table" *ngIf="products">
+                                    <app-order-detail-item [screen]="'order-enter'"
+                                        [notDisplayedColumns]="notDisplayedColumns" [showQuantityStatus]="false"
+                                        (outUpdateEvent)="outUpdateEvent($event)"
+                                        [products]="products"></app-order-detail-item>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+
+    </div>
+</div>

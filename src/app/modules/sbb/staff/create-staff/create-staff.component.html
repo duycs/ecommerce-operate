@@ -1,0 +1,122 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs" [formGroup]="form">
+    <div class="header-button-row">
+        <app-back-button [title]="'Tạo mới nhân viên'"></app-back-button>
+
+        <div class="action">
+            <button class="right-button" mat-raised-button color="primary" (click)="save()">
+                <mat-icon>save</mat-icon>
+                <span>Lưu</span>
+            </button>
+        </div>
+    </div>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <p class="label">Thông tin nhân viên</p>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field>
+                            <mat-label>Họ và tên</mat-label>
+                            <input matInput placeholder="" formControlName="name">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col">
+                        <app-input-search [label]="'Số điện thoại'" [placeholder]="''" [data]="staffs"
+                        [field]="'phoneNumber'" [value]="''" (output)="outputPhoneNumber($event)"></app-input-search>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <app-input-search [label]="'Email'" [placeholder]="''" [data]="staffs"
+                        [field]="'email'" [value]="''" (output)="outputEmail($event)"></app-input-search>
+                    </div>
+
+                    <div class="col-6">
+                        <mat-form-field>
+                            <mat-label>Sinh nhật</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="dob">
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field>
+                            <mat-label>Description</mat-label>
+                            <input matInput placeholder="" formControlName="description">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="label">Giới tính</p>
+                        <mat-radio-group aria-label="" formControlName="gender">
+                            <mat-radio-button value=1>Nam</mat-radio-button>
+                            <mat-radio-button value=2>Nữ</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="col">
+                        <p class="label">Trạng thái</p>
+                        <mat-radio-group aria-label="" formControlName="active">
+                            <mat-radio-button value="true">Hoạt động</mat-radio-button>
+                            <mat-radio-button value="false">Không hoạt động</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="label left">Ảnh đại diện</p>
+                        <div class="images full-width">
+                            <app-upload style="width: 100%; float:left; margin-right: 6px;" [limit]="1"
+                                [limitTotal]="avatars.length" [limitSizeInMb]="5" [uploadType]="1"
+                                [buttonName]="'Upload ảnh'"
+                                (onUploadFinished)="uploadAvartarImageFinished($event)"></app-upload>
+                        </div>
+                        <div class="left origin-photo">
+                            <div *ngIf="avatars && avatars.length > 0">
+                                <app-card-photo-grid class="left" [photos]="avatars"></app-card-photo-grid>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <div class="row">
+                    <p class="label left">Thông tin tài khoản đăng nhập</p>
+                    <p class="left">Sử dụng số điện thoại và mật khẩu mặc định để đăng nhập</p>
+
+                    <p class="">Số điện thoại: <span class="label"> {{phoneNumber}} </span></p>
+                    <p>Mật khẩu mặc định: <span class="label">{{defaultPassword}}</span></p>
+                </div>
+            </div>
+
+            <div class="container full-width">
+                <div class="full-width">
+                    <app-chip-autocomplete style="width: 100%;" [allChips]="moneyAccounts" [title]="'Tài khoản tiền'"
+                        (outSelectedOptions)="onSelectMoneyAccounts($event)"></app-chip-autocomplete>
+                </div>
+
+                <div class="full-width">
+                    <app-chip-autocomplete style="width: 100%;" *ngIf="permissionGroups" [allChips]="permissionGroups"
+                        [title]="'Nhóm phân quyền'"
+                        (outSelectedOptions)="onSelectPermissionGroups($event)"></app-chip-autocomplete>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+</div>

@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{title}}</h2>
+
+<mat-dialog-content [formGroup]="form">
+
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput placeholder="{{product.name}}" formControlName="name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <input matInput placeholder="{{product.description}}" formControlName="description">
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions class="container">
+  <div class="group-btn">
+    <button mat-button color="primary" (click)="onCancelClick()">Cancel</button>
+    <button mat-button mat-dialog-close color="primary" (click)="onUpdate(data)" cdkFocusInitial>Update</button>
+  </div>
+</mat-dialog-actions>

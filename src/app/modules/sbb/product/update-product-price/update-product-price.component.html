@@ -1,0 +1,46 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<mat-dialog-content [formGroup]="form" *ngIf="data">
+    <h1 mat-dialog-title>Cập nhật giá sản phẩm {{data.name}} - giá {{data.price | currency: data.currency ?? 'VND'}}
+    </h1>
+    <div mat-dialog-content>
+        <div class="no-margin full-width" style="margin-bottom: 12px!important;">
+            <div class="row">
+                <span class="label">Kiểu cập nhật giá</span>
+                <mat-radio-group aria-label="Cách cập nhật giá" formControlName="type">
+                    <mat-radio-button value="1">Cập nhật giá mới</mat-radio-button>
+                    <mat-radio-button value="2">Tăng thêm giá</mat-radio-button>
+                    <mat-radio-button value="3">Giảm bớt giá</mat-radio-button>
+                    <mat-radio-button value="4">Tăng % giá</mat-radio-button>
+                    <mat-radio-button value="5">Giảm % giá</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+
+        <div class="no-margin full-width">
+            <div class="row">
+                <div class="col-4">
+                    <mat-form-field>
+                        <mat-label>{{typeText}} {{upPriceText}}</mat-label>
+                        <input matInput placeholder="" formControlName="upPrice" id="upPrice">
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field>
+                        <mat-label>Ghi chú</mat-label>
+                        <input matInput placeholder="" formControlName="note">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions class="container">
+    <div class="group-btn">
+        <button mat-button mat-dialog-close color="primary" (click)="close()" cdkFocusInitial>
+            {{ 'action.close' | translate}}
+        </button>
+        <button mat-raised-button color="primary" (click)="okClick()" [innerHTML]="'action.save' | translate"></button>
+    </div>
+</mat-dialog-actions>

@@ -1,0 +1,10 @@
+<div class="back">
+    <button class="left" matSuffix mat-icon-button aria-label="back" (click)="onClick()">
+        <mat-icon style="margin-bottom: 3px;">keyboard_backspace</mat-icon>
+    </button>
+    <div class="title left">
+        <span class="head-title">{{title}}</span>
+        <div style="margin-top: 22px;" class=" right" *ngIf="real === 'doing'"></div>
+        <div style="margin-top: 22px;" class=" right" *ngIf="real === 'done'"></div>
+    </div>
+</div>

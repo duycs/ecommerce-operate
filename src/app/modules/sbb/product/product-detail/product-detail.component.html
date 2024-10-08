@@ -1,0 +1,187 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs" *ngIf="productDetail">
+    <div class="header-button-row">
+        <app-back-button [title]="'Chi tiết sản phẩm'" [real]="'doing'"></app-back-button>
+
+        <div class="create-delivery-order action">
+            <button class="right-button" mat-raised-button color="primary" (click)="createLanguages()">
+                <mat-icon>add</mat-icon>
+                <span>Tạo phiên bản đa ngôn ngữ</span>
+            </button>
+
+            <button *ngIf="!productDetail.isApproved" color="primary" mat-raised-button class="right-button"
+                (click)="setActiveProduct()">
+                <mat-icon>check</mat-icon>
+                <span>Phê duyệt</span>
+            </button>
+
+            <button *ngIf="productDetail.isApproved" mat-raised-button color="warn" class="right-button"
+                (click)="setDisableProduct()">
+                <mat-icon>remove_circle</mat-icon>
+                <span>Từ chối</span>
+            </button>
+
+        </div>
+    </div>
+
+    <div class="full-width">
+        <mat-tab-group class="full-width" mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab label="Tiếng Việt">
+                <mat-card class="full-width">
+                    <mat-card-content>
+                        <div class="container no-margin full-width">
+                            <div class="row" style="margin-bottom: 12px;">
+                                <div class="col-4">
+                                    <div class="image-border-green" style="width: 300px; height: 300px;">
+                                        <img src="{{productDetail.image}}">
+                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p class="label">{{productDetail.name}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p class="">Mã sản phẩm</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="label">{{productDetail.sku}}</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="">Thương hiệu</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="label">{{productDetail.brand}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p class="">Nhà cung cấp</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="label">{{productDetail.shop}}</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="">Danh mục</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="label">{{productDetail.category}}</p>
+                                                </div>
+
+                                            </div>
+                                            <div class="row" *ngIf="this.authService.hasPermission([4, 5])">
+                                                <div class="col">
+                                                    <p class="">Giá nhập</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="label">{{productDetail.originPrice | currency:'VND' }}</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="">Tính giá tự động</p>
+                                                </div>
+                                                <div class="col">
+                                                    <mat-checkbox class="example-margin"
+                                                        [checked]="productDetail?.applyTemplateSettings && productDetail?.applyTemplateSettings?.length > 0"
+                                                        [disabled]="true"></mat-checkbox>
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngIf="this.authService.hasPermission([4, 5])">
+                                                <div class="col">
+                                                    <p class="">Giá bán</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="label">{{productDetail.newPrice | currency:'VND'}}
+                                                    </p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="">Tự động duyệt</p>
+                                                </div>
+                                                <div class="col">
+                                                    <mat-checkbox class="example-margin"
+                                                        [checked]="productDetail?.isApproved ? productDetail.isApproved + '' : 'false'"
+                                                        [disabled]="true"></mat-checkbox>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <mat-icon style="float: left; margin-right: 6px;">notes</mat-icon>
+                                                    <p class="left" style="margin-right: 6px;">
+                                                        Mô tả sản phẩm:
+                                                    </p>
+                                                    <p class="value left">{{productDetail.description}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <p class="label">Trạng thái phê duyệt</p>
+                                            <app-chip [chips]="productDetail.statusChips"></app-chip>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+
+                <p class="head-title full-width">Phân loại sản phẩm</p>
+
+                <mat-card class="full-width">
+                    <mat-card-content class="">
+                        <div class="container no-margin full-width">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="label">Màu sắc</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <app-chip [chips]="productDetail.colorChips"></app-chip>
+                            </div>
+
+                            <div class="row" style="margin-top: 12px;">
+                                <div class="col">
+                                    <span class="label">Kích thước</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <app-chip [chips]="productDetail.sizeChips"></app-chip>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+
+                <p class="head-title full-width">Sản phẩm</p>
+
+                <mat-card class="full-width">
+                    <mat-card-content class="">
+                        <div class="container no-margin full-width" *ngFor="let child of productDetail.children"
+                            style="padding-bottom: 12px;">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="label">{{child.name}} - {{child.sku}}</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <app-chip [chips]="child?.attributeChips"></app-chip>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+
+
+            </mat-tab>
+
+            <mat-tab label="Tiếng Trung Quốc">
+
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+</div>

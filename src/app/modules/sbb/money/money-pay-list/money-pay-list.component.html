@@ -1,0 +1,147 @@
+<div class="" fxFlex="1 0 100%" fxLayout="column" fxLayoutAlign="start stretch">
+
+    <div class="header-button-row">
+        <app-back-button [title]="'Danh sách phiếu chi'" [real]="'done'"></app-back-button>
+
+        <div class="create-delivery-order action">
+            <button class="right-button" mat-raised-button color="" (click)="loadPage()">
+                <mat-icon>refresh</mat-icon>
+                <span [innerHTML]="'action.refresh' | translate"></span>
+            </button>
+
+            <button class="right-button" mat-raised-button color="primary" (click)="addMoneyPay()">
+                <mat-icon>add</mat-icon>
+                <span>Tạo phiếu chi</span>
+            </button>
+        </div>
+
+        <div class="search-field" style="width: 100%;">
+            <app-dropdown-search [allOptions]="allOptions"
+                (outSelectedOptions)="updateSearch($event)"></app-dropdown-search>
+        </div>
+
+    </div>
+
+    <mat-sidenav-container fxFlex="0 1 auto" class="content-table">
+
+        <mat-sidenav-content>
+            <div class="mat-elevation-z8 m-12">
+                <div class="table-container">
+                    <table mat-table class="jobs-table mat-elevation-z8" [dataSource]="dataSource" matSort
+                        matSortActive="id" matSortDirection="asc" matSortDisableClear>
+
+                        <ng-container matColumnDef="numbericalOrder">
+                            <th mat-header-cell *matHeaderCellDef>STT </th>
+                            <td mat-cell *matCellDef="let element; let i = index;">
+                                {{paginator.pageSize*paginator.pageIndex + i + 1}}
+                        </ng-container>
+
+                        <ng-container matColumnDef="code" sticky>
+                            <th mat-header-cell *matHeaderCellDef>Mã phiếu
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <span class="label left full-width hover-pointer"
+                                    (click)="openDetail(element)">{{element?.billCode}}</span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="moneyAccount">
+                            <th mat-header-cell *matHeaderCellDef>Tài khoản tiền
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.moneyAccount?.name}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="currency">
+                            <th mat-header-cell *matHeaderCellDef>Đơn vị tiền tệ
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{element.moneyAccount?.currencyType?.name}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="customer">
+                            <th mat-header-cell *matHeaderCellDef>Đối tượng
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.objectType?.name}} -
+                                {{element.object?.name}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="creator">
+                            <th mat-header-cell *matHeaderCellDef>Người tạo phiếu
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.createdBy}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="order">
+                            <th mat-header-cell *matHeaderCellDef>Chứng từ
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.bill?.name}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="reason">
+                            <th mat-header-cell *matHeaderCellDef>Lý do
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.moneyReason?.name}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="explain">
+                            <th mat-header-cell *matHeaderCellDef>Diễn giải
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.description}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="money">
+                            <th mat-header-cell *matHeaderCellDef>Số tiền
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.totalMoney | currency:
+                                element.moneyAccount?.currencyType?.name}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="createdDate">
+                            <th mat-header-cell *matHeaderCellDef>Ngày tạo
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <span matTooltip="{{element.createdDate | dateDisplay:'origin'}}"
+                                    matTooltipPosition="above">
+                                    {{element?.createdDate | dateDisplay}}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action" sticky>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="head-action"
+                                [innerHTML]="'action.title' | translate">
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-icon-button [matMenuTriggerFor]="menu"
+                                    aria-label="Example icon-button with a menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="openDetail(element)">
+                                        <mat-icon>remove_red_eye</mat-icon>
+                                        <span [innerHTML]="'action.detail' | translate"></span>
+                                    </button>
+
+                                    <button mat-menu-item (click)="print(element)">
+                                        <mat-icon>print</mat-icon>
+                                        <span>In đơn</span>
+                                        <div style="margin-left: 12px;" class=" right"></div>
+                                    </button>
+
+                                </mat-menu>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <mat-paginator [length]="this.dataSource.count" [pageIndex]="0" [pageSize]="10"
+                        [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons (page)="handlePageEvent($event)">
+                    </mat-paginator>
+                </div>
+            </div>
+
+        </mat-sidenav-content>
+
+    </mat-sidenav-container>
+</div>

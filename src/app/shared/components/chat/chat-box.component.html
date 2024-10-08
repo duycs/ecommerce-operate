@@ -1,0 +1,120 @@
+<div [ngClass]="showHeader ? 'messages mat-elevation-z5' : 'messages'" style="position: relative; height: 100vh;">
+    <div class="messages-header" *ngIf="showHeader && friend"
+        style="position: relative; padding: 6px 12px 6px 12px; left: 0; top: 55px; width: 100%; z-index: 1000; background-color: #4caf50;">
+        <div style="width: 100%; float: left;">
+            <img matListAvatar [src]="friend.chatPic ? friend.chatPic 
+        : 'assets/images/image-placeholder.png'" />
+            <p style="font-weight: 600; font-size: 16px; margin-top: 4px; color: white;">{{ friend.chatName }}</p>
+        </div>
+        <button mat-icon-button matSuffix style="float: right; color: white;" (click)="close(friend)">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <mat-divider *ngIf="showHeader"></mat-divider>
+
+    <div [ngClass]="showHeader ? 'chat-area' : 'chat-area-web'"
+        style="height: 93%; margin: 0; padding: 55px 12px 55px 12px;">
+        <ng-container *ngIf="currentUser && friend">
+            <!-- <ng-container *ngIf="messages$ | async as messages"> -->
+            <div *ngIf="!messages || messages.length == 0" class="please-message"><span>{{'chat.please-message' |
+                    translate}}</span></div>
+            <ng-container *ngIf="messages">
+                <div class="chat-bubble-container" [ngClass]="{ sender: message.senderId === currentUser.uid }"
+                    *ngFor="let message of messages">
+                    <div class="chat-bubble">
+                        <!-- {{ message.text }} -->
+                        <div *ngIf="message.text" [innerHtml]="message.text"> </div>
+
+                        <span class="chat-name" style="float: left;">
+                            {{ message.senderName }}
+                        </span>
+                        <span class="chat-time" matTooltip="{{message.sentDate | dateDisplay:'origin'}}"
+                            matTooltipPosition="above">
+                            {{ message.sentDate | dateDisplay }}
+                        </span>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+        <div #endOfChat></div>
+    </div>
+
+    <div class="actions" style="position: absolute; left:0; bottom: 0; width: 100%;">
+        <div class="input-area">
+            <mat-form-field appearance="fill" style="margin-bottom: -1.45em">
+                <input matInput placeholder="{{'chat.enter-message' | translate}}" [formControl]="messageControl"
+                    (keydown.enter)="sendMessage(friend)" (click)="clickAsReaded(friend)" />
+
+                <button *ngIf="action == 'text'" mat-icon-button matSuffix (click)="sendMessage(friend)">
+                    <mat-icon>send</mat-icon>
+                </button>
+
+                <button *ngIf="action != 'text'" mat-icon-button matSuffix (click)="clickMoreActions(friend)">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+
+                <button *ngIf="action != 'text'" mat-icon-button matSuffix (click)="file.click()">
+                    <input type="file" #file placeholder="Chọn file" (change)="uploadImages(friend, file.files)"
+                        style="display:none;" multiple>
+                    <mat-icon>image</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+
+
+        <div *ngIf="moreAction && action != 'text'" class="more-actions" style="background-color: white;">
+            <mat-grid-list cols="4" rowHeight="2:1">
+                <mat-grid-tile>
+                    <button mat-icon-button matSuffix (click)="fileMedia.click()" matTooltip="Gửi ảnh"
+                        matTooltipPosition="above">
+                        <input type="file" accept="file_extension|audio/*|video/*|image/*|media_type" #fileMedia
+                            placeholder="Chọn file" (change)="uploadImages(friend, fileMedia.files)"
+                            style="display:none;" multiple>
+                        <mat-icon>image</mat-icon>
+                    </button>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <button mat-icon-button matSuffix (click)="file.click()" matTooltip="Gửi file"
+                        matTooltipPosition="above">
+                        <input type="file" #file placeholder="Chọn file" (change)="uploadFiles(friend, file.files)"
+                            style="display:none;" multiple>
+                        <mat-icon>attach_file</mat-icon>
+                    </button>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <button mat-icon-button matSuffix matTooltip="Nhắc hẹn" matTooltipPosition="above"
+                        (click)="openSetAlarm(friend)">
+                        <mat-icon>alarm</mat-icon>
+                    </button>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <button mat-icon-button matSuffix matTooltip="Tạo đơn hàng" matTooltipPosition="above"
+                        (click)="openCreateOrder(friend)">
+                        <mat-icon>shopping_cart</mat-icon>
+                    </button>
+                </mat-grid-tile>
+
+
+                <mat-grid-tile>
+                    <button mat-icon-button matSuffix matTooltip="Xem đơn hàng" matTooltipPosition="above"
+                        (click)="openOrder(friend)">
+                        <mat-icon>list_alt</mat-icon>
+                    </button>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    6
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    7
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    8
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+
+
+    </div>
+
+</div>

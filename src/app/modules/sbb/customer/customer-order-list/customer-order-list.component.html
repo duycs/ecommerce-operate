@@ -1,0 +1,358 @@
+<div class="" fxFlex="1 0 100%" fxLayout="column" fxLayoutAlign="start stretch">
+
+    <div class="full-width">
+        <mat-card class="full-width">
+            <mat-card-content>
+                <div class="container no-margin full-width">
+                    <div class="row">
+                        <div class="col" style="text-align: center;">
+                            <p class="label font-medium"><mat-icon class="font-medium"
+                                    style="width: 32px;">shopping_cart</mat-icon>Tổng số đơn hàng</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="label left font-medium">
+                                {{statistic.totalOrder ?? 0}} đơn
+                            </p>
+                        </div>
+                        <div class="col">
+                            <p class="label left font-medium">
+                                {{statistic.totalProduct ?? 0}} sản phẩm
+                            </p>
+                        </div>
+                        <div class="col">
+                            <p class="label left font-medium">
+                                {{ statistic.totalMoneyOrder ?? 0 | currency: customer?.currency ?? 'VND'}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="full-width">
+        <mat-card class="">
+            <mat-card-content>
+                <div class="container no-margin full-width">
+                    <div class="row">
+                        <p class="label orange font-medium">Chờ xác nhận</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="label left">
+                                {{statistic.totalOrderPending ?? 0}} đơn
+                            </p>
+                        </div>
+                       
+                        <div class="col">
+                            <p class="label left">
+                                {{ statistic.totalMoneyPending ?? 0 | currency: customer?.currency ?? 'VND'}}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="label left">
+                                {{statistic.totalProductPending ?? 0}} sản phẩm
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="">
+            <mat-card-content>
+                <div class="container no-margin full-width">
+                    <div class="row">
+                        <p class="label blue font-medium">Đang xử lý</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="label left">
+                                {{statistic.totalOrderExecuting ?? 0}} đơn
+                            </p>
+                        </div>
+                       
+                        <div class="col">
+                            <p class="label left">
+                                {{ statistic.totalMoneyExecuting ?? 0 | currency: customer?.currency ?? 'VND'}}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="label left">
+                                {{statistic.totalProductExecuting ?? 0}} sản phẩm
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="">
+            <mat-card-content>
+                <div class="container no-margin full-width">
+                    <div class="row">
+                        <p class="label green font-medium">Đã giao hàng</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="label left">
+                                {{statistic.totalOrderCompleted ?? 0}} đơn
+                            </p>
+                        </div>
+                       
+                        <div class="col">
+                            <p class="label left">
+                                {{ statistic.totalMoneyCompleted?? 0 | currency: customer?.currency ?? 'VND'}}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="label left">
+                                {{statistic.totalProductCompleted ?? 0}} sản phẩm
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="" style="min-width: 200px;">
+            <mat-card-content>
+                <div class="container no-margin full-width">
+                    <div class="row">
+                        <p class="label font-medium"><span style="color: violet;">từ chối</span></p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="label left">
+                                {{statistic.totalOrderDenied ?? 0}} đơn
+                            </p>
+                        </div>
+                        <div class="col">
+                            <p class="label left">
+                                {{ statistic.totalMoneyDenied?? 0 | currency: customer?.currency ?? 'VND'}}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="label left">
+                                {{statistic.totalProductDenied ?? 0}} sản phẩm
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="" style="min-width: 200px;">
+            <mat-card-content>
+                <div class="container no-margin full-width">
+                    <div class="row">
+                        <p class="label font-medium"><span style="color: red;">Đã hủy</span></p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="label left">
+                                {{statistic.totalOrderCancel ?? 0}} đơn
+                            </p>
+                        </div>
+                        
+                        <div class="col">
+                            <p class="label left">
+                                {{ statistic.totalMoneyCancel?? 0 | currency: customer?.currency ?? 'VND'}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="label left">
+                                {{statistic.totalProductCancel ?? 0}} sản phẩm
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="header-button-row">
+        <div class="search-field right-button" style="width: 100%;">
+            <app-dropdown-search [allOptions]="allOptions"
+                (outSelectedOptions)="updateSearch($event)"></app-dropdown-search>
+        </div>
+    </div>
+
+    <mat-sidenav-container fxFlex="0 1 auto" class="content-table">
+        <mat-sidenav-content>
+            <div class="mat-elevation-z8 m-12">
+                <div class="table-container">
+                    <table mat-table class="jobs-table mat-elevation-z8" [dataSource]="dataSource" matSort
+                        matSortActive="id" matSortDirection="asc" matSortDisableClear>
+
+                        <ng-container matColumnDef="numericalOrder">
+                            <th mat-header-cell *matHeaderCellDef>STT
+                            </th>
+                            <td mat-cell *matCellDef="let element; let i = index;">
+                                {{paginator.pageSize*paginator.pageIndex + i + 1}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="code" sticky>
+                            <th mat-header-cell *matHeaderCellDef>Mã đơn
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <a class="hover-pointer no-underline" href="/sbb/orders/{{element.id}}">
+                                    {{element.code}}
+                                </a>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="orderNumber">
+                            <th mat-header-cell *matHeaderCellDef>Số toa
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.orderNumber}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="staff">
+                            <th mat-header-cell *matHeaderCellDef>Nhân viên hỗ trợ</th>
+                            <td mat-cell *matCellDef="let element"> {{element.staffName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="quantityOrder">
+                            <th mat-header-cell *matHeaderCellDef>Sản phẩm Đã giao/Đặt hàng
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="statistic-ratio">
+                                    <span
+                                        class="information">{{element.quantityDelivered}}/{{element.quantityOrdered}}</span>
+                                    <section class="example-section">
+                                        <mat-progress-bar class="example-margin"
+                                            [ngClass]="element.quantityDeliverRatioColorClass" mode="determinate"
+                                            [value]="element.quantityDeliverRatio"></mat-progress-bar>
+                                    </section>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="quantityDelivery">
+                            <th mat-header-cell *matHeaderCellDef>Sản phẩm Sẵn hàng/Còn thiếu
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="statistic-ratio">
+                                    <span class="information">{{element.quantityInStock}}/{{
+                                        element.quantityLack }}</span>
+                                    <section class="example-section">
+                                        <mat-progress-bar class="example-margin"
+                                            [ngClass]="element.quantityProductRatioColorClass" mode="determinate"
+                                            [value]="element.quantityProductRatio"></mat-progress-bar>
+                                    </section>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="cashDiscount">
+                            <th mat-header-cell *matHeaderCellDef>Chiết khấu </th>
+                            <td mat-cell *matCellDef="let element"> {{element.cashDiscount | currency:'VND'}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="price">
+                            <th mat-header-cell *matHeaderCellDef>Tổng tiền
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.totalPrice | currency:'VND'}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="processStatus">
+                            <th mat-header-cell *matHeaderCellDef>Trạng thái đơn</th>
+                            <td mat-cell *matCellDef="let element">
+                                <app-chip [chips]="element.processStatusChips"></app-chip>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="quantityStatus">
+                            <th mat-header-cell *matHeaderCellDef>Trạng số lượng</th>
+                            <td mat-cell *matCellDef="let element">
+                                <app-chip [chips]="element.quantityStatusChips"></app-chip>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="orderDate">
+                            <th mat-header-cell *matHeaderCellDef>Ngày đặt
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <span matTooltip="{{element.orderDate | dateDisplay:'origin'}}"
+                                    matTooltipPosition="above">
+                                    {{element.orderDate | dateDisplay}}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action" sticky>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="head-action"
+                                [innerHTML]="'action.title' | translate">
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="openDetail(element)">
+                                        <mat-icon>remove_red_eye</mat-icon>
+                                        <span [innerHTML]="'action.detail' | translate"></span>
+                                        <div style="margin-left: 12px;" class=" right"></div>
+                                    </button>
+
+                                    <button *ngIf="element.status === 2" mat-menu-item
+                                        (click)="confirmDeliveryAnOrder(element)">
+                                        <mat-icon>add</mat-icon>
+                                        <span>Tạo đơn giao hàng</span>
+                                        <div style="margin-left: 12px;" class=" right"></div>
+                                    </button>
+
+                                    <button *ngIf="element.status === 1 || element.status === 0" mat-menu-item
+                                        (click)="approveOrder(element)">
+                                        <mat-icon>check_circle_outline</mat-icon>
+                                        <span>Duyệt đơn</span>
+                                        <div style="margin-left: 12px;" class=" right"></div>
+                                    </button>
+
+                                    <button mat-menu-item (click)="print(element)">
+                                        <mat-icon>print</mat-icon>
+                                        <span>In đơn</span>
+                                        <div style="margin-left: 12px;" class=" right"></div>
+                                    </button>
+
+                                </mat-menu>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <mat-paginator [length]="this.dataSource.count" [pageIndex]="0" [pageSize]="10"
+                        [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons (page)="handlePageEvent($event)">
+                    </mat-paginator>
+                </div>
+            </div>
+
+        </mat-sidenav-content>
+
+    </mat-sidenav-container>
+</div>

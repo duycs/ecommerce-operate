@@ -1,0 +1,134 @@
+<div class="" fxFlex="1 0 100%" fxLayout="column" fxLayoutAlign="start stretch">
+
+    <div class="header-button-row">
+        <app-back-button [title]="'Danh sách tài khoản nhân viên'"></app-back-button>
+
+        <div class="create-delivery-order action">
+            <button class="right-button" mat-raised-button color="" (click)="loadPage()">
+                <mat-icon>refresh</mat-icon>
+                <span [innerHTML]="'action.refresh' | translate"></span>
+            </button>
+
+            <button class="right-button" mat-raised-button color="primary" (click)="add()">
+                <mat-icon>add</mat-icon>
+                <span>Tạo tài khoản nhân viên</span>
+            </button>
+        </div>
+
+        <div class="search-field" style="width: 100%;">
+            <app-dropdown-search [allOptions]="allOptions"
+                (outSelectedOptions)="updateSearch($event)"></app-dropdown-search>
+        </div>
+
+    </div>
+
+    <mat-sidenav-container fxFlex="0 1 auto" class="content-table">
+
+        <mat-sidenav-content>
+            <div class="mat-elevation-z8 m-12">
+                <div class="table-container">
+                    <table mat-table class="jobs-table mat-elevation-z8" [dataSource]="dataSource" matSort
+                        matSortActive="id" matSortDirection="asc" matSortDisableClear>
+
+                        <ng-container matColumnDef="numbericalOrder">
+                            <th mat-header-cell *matHeaderCellDef>STT </th>
+                            <td mat-cell *matCellDef="let element let i = index;">
+                                {{paginator.pageSize*paginator.pageIndex + i + 1}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="name" sticky>
+                            <th mat-header-cell *matHeaderCellDef>Họ tên
+                                <td mat-cell *matCellDef="let element">
+                                    <a class="hover-pointer no-underline" href="/sbb/staffs/{{element.id}}">
+    
+    
+                                        <div class="left full-width">
+                                            <div *ngIf="!element.avatarUrl" style="margin: 6px;
+                                        float: left;
+                                        width: 30px;
+                                        height: 30px;">
+                                            </div>
+                                            
+                                            <img *ngIf="element.avatarUrl" style="margin: 6px;
+                                            float: left;
+                                            width: 30px;
+                                            height: 30px;
+                                            border-radius: 50%;
+                                            border: 1px solid green;"
+                                                src="{{element?.avatarUrl ?? '/assets/images/default.png'}}">
+                                            <span style="line-height: 42px;">{{element.name}}</span>
+                                        </div>
+                                    </a>
+                                </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="email">
+                            <th mat-header-cell *matHeaderCellDef>Email
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="phoneNumber">
+                            <th mat-header-cell *matHeaderCellDef>Số điện thoại
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.phoneNumber}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="permission">
+                            <th mat-header-cell *matHeaderCellDef>Nhóm quyền</th>
+                            <td mat-cell *matCellDef="let element">
+                                <app-chip [chips]="element?.permissionGroups"></app-chip>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef>Trạng thái hoạt động</th>
+                            <td mat-cell *matCellDef="let element">
+                                <app-chip [chips]="element.statusChips"></app-chip>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action" sticky>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="head-action"
+                                [innerHTML]="'action.title' | translate">
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-icon-button [matMenuTriggerFor]="menu"
+                                    aria-label="Example icon-button with a menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+
+                                    <button *ngIf="!element.active" mat-menu-item (click)="setActive(element)">
+                                        <mat-icon>flash_on</mat-icon>
+                                        <span>Hoạt động</span>
+                                    </button>
+
+                                    <button *ngIf="element.active" mat-menu-item (click)="setInactive(element)">
+                                        <mat-icon>flash_off</mat-icon>
+                                        <span>Hủy hoạt động</span>
+                                    </button>
+
+                                    <!-- <button mat-menu-item (click)="openUpdateDialog(element)">
+                                        <mat-icon>edit</mat-icon>
+                                        <span [innerHTML]="'action.update' | translate"></span>
+                                    </button> -->
+
+                                </mat-menu>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <mat-paginator [length]="this.dataSource.count" [pageIndex]="0" [pageSize]="10"
+                        [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons (page)="handlePageEvent($event)">
+                    </mat-paginator>
+                </div>
+            </div>
+
+        </mat-sidenav-content>
+
+    </mat-sidenav-container>
+</div>

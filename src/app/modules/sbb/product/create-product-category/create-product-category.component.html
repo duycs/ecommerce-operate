@@ -1,0 +1,237 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs" [formGroup]="form">
+    <div class="header-button-row">
+        <app-back-button [title]="'Tạo mới danh mục'" [real]="'done'"></app-back-button>
+        <div class="create-delivery-order action ">
+            <button class="right-button" mat-raised-button color="primary" (click)="save()">
+                <mat-icon>save</mat-icon>
+                <span>Lưu</span>
+            </button>
+        </div>
+    </div>
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container full-width no-margin">
+                <div class="row">
+                    <div class="col">
+                        <app-input-search [label]="'Tên danh mục'" [placeholder]="''" [data]="categories" [field]="'name'"
+                            [value]="''" (output)="outputName($event)"></app-input-search>
+                    </div>
+                    <div class="col">
+                        <app-input-search [label]="'Mã danh mục'" [placeholder]="suggestCode" [data]="categories"
+                            [field]="'code'" [value]="suggestCode" (output)="outputCode($event)"></app-input-search>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="editor full-width">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Mô tả</mat-label>
+                            <textarea matInput placeholder="..." formControlName="description"></textarea>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <p class="label">Trạng thái</p>
+                    <mat-radio-group aria-label="Trạng thái" formControlName="isActive">
+                        <mat-radio-button value="true">Hoạt động</mat-radio-button>
+                        <mat-radio-button value="false">Không hoạt động</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container full-width no-margin">
+                <div class="row">
+                    <p class="label">Thiết lập mẫu</p>
+                    <mat-tab-group>
+                        <mat-tab label="Thiết lập phí cho Template phí vận chuyển">
+                            <ng-container formArrayName="transporterCostSettings">
+                                <mat-table class="table-none-style" *ngIf="transporterCostSettingDataSource" [dataSource]="transporterCostSettingDataSource">
+                                    <ng-container matColumnDef="numbericalOrder">
+                                        <th mat-header-cell *matHeaderCellDef>STT </th>
+                                        <td mat-cell *matCellDef="let element; let i = index;">
+                                            {{i + 1}}
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="id">
+                                        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                                        <mat-cell *matCellDef="let element" [formGroup]="element">
+                                            <mat-form-field>
+                                                <input [readonly]="true" matInput formControlName="id">
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="templateId">
+                                        <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+                                        <mat-cell *matCellDef="let element" [formGroup]="element">
+                                            <mat-form-field>
+                                                <input [readonly]="true" matInput formControlName="templateId">
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="templateName">
+                                        <mat-header-cell *matHeaderCellDef> Template phí vận chuyển </mat-header-cell>
+                                        <mat-cell *matCellDef="let element" [formGroup]="element">
+                                            <mat-form-field>
+                                                <input [readonly]="true" matInput formControlName="templateName">
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="cost">
+                                        <mat-header-cell *matHeaderCellDef> Phí vận chuyển </mat-header-cell>
+                                        <mat-cell *matCellDef="let element;" [formGroup]="element">
+                                            <mat-form-field>
+                                                <input matInput formControlName="cost">
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="description">
+                                        <mat-header-cell *matHeaderCellDef> Mô tả </mat-header-cell>
+                                        <mat-cell *matCellDef="let element;" [formGroup]="element">
+                                            <mat-form-field>
+                                                <input matInput formControlName="description">
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="action" sticky>
+                                        <mat-header-cell mat-header-cell *matHeaderCellDef>
+                                            <p class="label" style="padding-left: 14px;"
+                                                [innerHTML]="'action.title' | translate"></p>
+                                        </mat-header-cell>
+                                        <mat-cell mat-cell *matCellDef="let element">
+                                            <button mat-icon-button [matMenuTriggerFor]="menu"
+                                                aria-label="Example icon-button with a menu">
+                                                <mat-icon>more_vert</mat-icon>
+                                            </button>
+                                            <mat-menu #menu="matMenu">
+                                                <button mat-menu-item (click)="removeTransporterCost(element)">
+                                                    <mat-icon>delete</mat-icon>
+                                                    <span [innerHTML]="'action.delete' | translate"></span>
+                                                </button>
+                                            </mat-menu>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <mat-header-row *matHeaderRowDef="transporterCostDisplayedColumns"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: transporterCostDisplayedColumns;"></mat-row>
+                                </mat-table>
+                            </ng-container>
+                        </mat-tab>
+
+                        <mat-tab label="Thiết lập lợi nhuận cho nhà cung cấp">
+                            <ng-container formArrayName="productProfitSettings">
+                                <mat-table class="table-none-style" *ngIf="productProfitSettingDataSource" [dataSource]="productProfitSettingDataSource">
+                                    <ng-container matColumnDef="numbericalOrder">
+                                        <th mat-header-cell *matHeaderCellDef>STT </th>
+                                        <td mat-cell *matCellDef="let element; let i = index;">
+                                            {{i + 1}}
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="id">
+                                        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                                        <mat-cell *matCellDef="let element" [formGroup]="element">
+                                            <mat-form-field>
+                                                <input [readonly]="true" matInput formControlName="id">
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="shopId">
+                                        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                                        <mat-cell *matCellDef="let element" [formGroup]="element">
+                                            <mat-form-field>
+                                                <input [readonly]="true" matInput formControlName="shopId">
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="shopName">
+                                        <mat-header-cell *matHeaderCellDef> Nhà cung cấp </mat-header-cell>
+                                        <mat-cell *matCellDef="let element" [formGroup]="element">
+                                            <mat-form-field>
+                                                <input [readonly]="true" matInput formControlName="shopName">
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="percentProfit">
+                                        <mat-header-cell *matHeaderCellDef> LN theo % </mat-header-cell>
+                                        <mat-cell *matCellDef="let element;" [formGroup]="element">
+                                            <mat-form-field>
+                                                <input matInput formControlName="percentProfit" (keyup)="changePercentProfit(element)">
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="moneyProfit">
+                                        <mat-header-cell *matHeaderCellDef> LN theo tiền mặt </mat-header-cell>
+                                        <mat-cell *matCellDef="let element;" [formGroup]="element">
+                                            <mat-form-field>
+                                                <input matInput formControlName="moneyProfit" (keyup)="changeMoneyProfit(element)">
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="templateProfit">
+                                        <mat-header-cell *matHeaderCellDef> Template LN </mat-header-cell>
+                                        <mat-cell *matCellDef="let element;" [formGroup]="element">
+                                            <mat-form-field>
+                                                <mat-label>Chọn template</mat-label>
+                                                <mat-select matNativeControl formControlName="templateProfit" (valueChange)="changeTemplateProfit(element)">
+                                                    <mat-option *ngFor="let template of templateProfits"
+                                                        [value]="template.id">{{template.name}} - {{template.code}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="description">
+                                        <mat-header-cell *matHeaderCellDef> Mô tả </mat-header-cell>
+                                        <mat-cell *matCellDef="let element;" [formGroup]="element">
+                                            <mat-form-field>
+                                                <input matInput formControlName="description">
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="action" sticky>
+                                        <mat-header-cell mat-header-cell *matHeaderCellDef>
+                                            <p class="label" style="padding-left: 14px;"
+                                                [innerHTML]="'action.title' | translate"></p>
+                                        </mat-header-cell>
+                                        <mat-cell mat-cell *matCellDef="let element">
+                                            <button mat-icon-button [matMenuTriggerFor]="menu"
+                                                aria-label="Example icon-button with a menu">
+                                                <mat-icon>more_vert</mat-icon>
+                                            </button>
+                                            <mat-menu #menu="matMenu">
+                                                <button mat-menu-item (click)="removeProductProfit(element)">
+                                                    <mat-icon>delete</mat-icon>
+                                                    <span [innerHTML]="'action.delete' | translate"></span>
+                                                </button>
+                                            </mat-menu>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <mat-header-row *matHeaderRowDef="productProfitDisplayedColumns"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: productProfitDisplayedColumns;"></mat-row>
+                                </mat-table>
+                            </ng-container>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

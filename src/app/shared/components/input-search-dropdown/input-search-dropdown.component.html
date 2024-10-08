@@ -1,0 +1,19 @@
+<div class="" [formGroup]="form" style="position: relative;">
+  <mat-form-field>
+    <mat-label>{{label}}</mat-label>
+    <input matInput placeholder="{{placeholder}}" formControlName="value" />
+
+    <button style="margin-top: 6px;" *ngIf="!isMatch && value!== ''" matSuffix mat-icon-button aria-label="Clear"
+      (click)="clear()">
+      <mat-icon>checked</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <div class="list" style="position: absolute; background: white; width: 100%; z-index: 1000;" *ngIf="value && value !== '' && data">
+    <mat-list>
+      <mat-list-item *ngFor="let option of data">{{option.name}}
+        <mat-icon (click)="choose(option)" style="cursor: pointer; float: right;">add</mat-icon></mat-list-item>
+    </mat-list>
+  </div>
+
+</div>

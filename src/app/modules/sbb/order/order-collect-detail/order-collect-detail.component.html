@@ -1,0 +1,106 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs">
+  <div class="header-button-row">
+    <app-back-button [title]="'Chi tiết phiếu nhặt hàng'" [real]="'doing'"></app-back-button>
+
+    <div class="create-delivery-order action ">
+      <button class="right-button" mat-raised-button color="accent" (click)="print()">
+        <mat-icon>print</mat-icon>
+        <span>In phiếu</span>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="detail">
+    <mat-card class="full-width">
+      <mat-card-header> </mat-card-header>
+      <mat-card-content>
+        <div class="container no-margin full-width">
+          <div class="row">
+            <div class="col-8">
+              <div class="title">
+                <p class="label">Thông tin đơn nhập hàng</p>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <p class="">Mã đơn giao hàng</p>
+                </div>
+                <div class="col">
+                  <!-- <a class="hover-pointer no-underline" href="/sbb/order-delivers/{{detail?.exportReceiptId}}"> -->
+                    <p class="value label">
+                      {{ detail?.exportReceiptCode }}
+                    </p>
+                  <!-- </a> -->
+                </div>
+                <div class="col">
+                  <p class="">Mã đơn hàng</p>
+                </div>
+                <div class="col">
+                  <a class="hover-pointer no-underline" href="/sbb/orders?code={{detail?.customerOrderCode}}">
+                    <p class="value label">{{ detail?.customerOrderCode }}</p>
+                  </a>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-4">
+                  <p class="">Thời gian tạo đơn giao hàng</p>
+                </div>
+                <div class="col-4">
+                  <p class="value">{{ detail?.createdDate | dateDisplay : "origin" }}</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <p class="">Bộ phận</p>
+                </div>
+                <div class="col">
+                  <p class="value">{{ detail.department }}</p>
+                </div>
+                <div class="col">
+                  <p class="">Số phiếu</p>
+                </div>
+                <div class="col">
+                  <p class="value label">{{ detail?.ordinalNumber }}</p>
+                </div>
+                <div class="col">
+                  <p class="">Số lượng</p>
+                </div>
+                <div class="col">
+                  <p>{{detail?.quantity}}</p>
+                </div>
+                <div class="col">
+                  <p class="">Nhân viên</p>
+                </div>
+                <div class="col">
+                  <p class="value label">{{ detail?.staffName }}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <br />
+
+    <span class="head-title">Danh sách sản phẩm</span>
+
+    <div class="products">
+      <mat-card class="full-width">
+        <mat-card-content>
+          <div class="container no-margin full-width">
+            <div class="row">
+              <div class="table" *ngIf="detail.products">
+                <app-order-detail-item [showQuantityStatus]="false" [screen]="'order-enter'"
+                  [products]="detail.products" [notDisplayedColumns]="notDisplayedColumns"></app-order-detail-item>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs" *ngIf="group">
+    <div class="header-button-row">
+        <app-back-button [title]="'Chi tiết nhóm sản phẩm'" [real]="'doing'"></app-back-button>
+
+        <div class="create-delivery-order action">
+            <button *ngIf="!group.visible" color="primary" mat-raised-button class="right-button"
+                (click)="setVisible()">
+                <mat-icon>visibility</mat-icon>
+                <span>Hiển thị</span>
+            </button>
+
+            <button *ngIf="group.visible" mat-raised-button color="warn" class="right-button" (click)="setInvisible()">
+                <mat-icon>visibility_off</mat-icon>
+                <span>Không hiển thị</span>
+            </button>
+
+        </div>
+    </div>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <div class="row">
+                    <div class="col">
+                        <p class="">Tên nhóm sản phẩm</p>
+                    </div>
+                    <div class="col">
+                        <p class="label">{{group.name}}</p>
+                    </div>
+
+                    <div class="col">
+                        <p class="">Mã</p>
+                    </div>
+                    <div class="col">
+                        <p class="label">{{group.code}}</p>
+                    </div>
+
+                    <div class="col-4">
+                        <p class="label">Trạng thái hiển thị</p>
+                        <app-chip [chips]="group.visibleChips"></app-chip>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="">Miêu tả</p>
+                    </div>
+                    <div class="col">
+                        <p class="label">{{group.description}}</p>
+                    </div>
+                </div>
+
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+
+</div>
+
+<p class="head-title full-width">Sản phẩm</p>
+
+<mat-card class="full-width">
+    <mat-card-content class="">
+        <div class="container no-margin full-width" *ngFor="let product of group.products">
+           
+        </div>
+    </mat-card-content>
+</mat-card>

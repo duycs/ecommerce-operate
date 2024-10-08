@@ -1,0 +1,165 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs" [formGroup]="form">
+    <div class="header-button-row">
+        <app-back-button [title]="'Cập nhật nhà cung cấp'" [real]="'doing'"></app-back-button>
+
+        <div class="action">
+            <button class="right-button" mat-raised-button color="primary" (click)="save()">
+                <mat-icon>save</mat-icon>
+                <span>Lưu</span>
+            </button>
+        </div>
+    </div>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <div class="row">
+                    <div class="col-8">
+                        <mat-form-field>
+                            <mat-label>Tên nhà cung cấp</mat-label>
+                            <input matInput placeholder="" formControlName="name">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Số điện thoại</mat-label>
+                            <input matInput placeholder="" (keyup)="pressChangePhone($event)"
+                                formControlName="phoneNumber">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Email</mat-label>
+                            <input matInput placeholder="*" formControlName="email">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Đơn vị tiền tệ</mat-label>
+                            <mat-select matNativeControl formControlName="currency">
+                                <mat-option *ngFor="let currency of currencies"
+                                    [value]="currency.code">{{currency.code}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Giới hạn công nợ {{textMoney}}</mat-label>
+                            <input matInput formControlName="debtLimit">
+                        </mat-form-field>
+
+                        <div class="row" style="margin-bottom: 12px;">
+                            <p class="">
+                                <span class="label">Tự động phê duyệt/White list</span>
+                                <span class="full-width">Nhà cung cấp nằm trong danh sách white list sẽ được tự động phê duyệt sản
+                                    phẩm và bài đăng khi tạo mới</span>
+                            </p>
+                            <mat-radio-group aria-label="" formControlName="autoApprove">
+                                <mat-radio-button value="false">Không</mat-radio-button>
+                                <mat-radio-button value="true">Có</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+
+                        <div class="row">
+                            <p class="label">Trạng thái</p>
+                            <mat-radio-group aria-label="" formControlName="isActivated">
+                                <mat-radio-button value="true">Hoạt động</mat-radio-button>
+                                <mat-radio-button value="false">Không hoạt động</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+
+                    </div>
+                    <div class="col">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Quốc gia</mat-label>
+                            <mat-select formControlName="country">
+                                <mat-option *ngFor="let country of countries"
+                                    [value]="country.code">{{country.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <app-location [wardId]="shop?.wardId" (locationSelected)="locationSelected($event)"></app-location>
+
+                        <mat-form-field>
+                            <mat-label>Địa chỉ</mat-label>
+                            <input matInput placeholder="*" formControlName="address">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <div class="row">
+                    <p class="label left">Thông tin tài khoản đăng nhập trên App dành cho nhà cung cấp</p>
+                    <p class="left">Sử dụng số điện thoại/username và mật khẩu mặc định để đăng nhập</p>
+
+                    <!-- <p class="">Số điện thoại: <span class="label"> {{phoneNumber}} </span></p> -->
+                    <p class="">Username: <span class="label"> {{username}} </span></p>
+                    <!-- <p>Mật khẩu mặc định: <span class="label">{{defaultPassword}}</span></p> -->
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <div class="row">
+                    <p class="label left">Ảnh đại diện nhà cung cấp</p>
+                    <div class="images full-width">
+                        <app-upload style="width: 100%; float:left; margin-right: 6px;" [limit]="1"
+                            [limitTotal]="avartars.length" [limitSizeInMb]="5" [uploadType]="1"
+                            [buttonName]="'Upload ảnh'" (onUploadFinished)="uploadAvartarImageFinished($event)"></app-upload>
+                    </div>
+                    <div class="left origin-photo">
+                        <div *ngIf="avartars && avartars.length > 0">
+                            <app-card-photo-grid class="left" [photos]="avartars"></app-card-photo-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <div class="row">
+                    <p class="label left">Banner slider giới thiệu nhà cung cấp</p>
+                    <p class="left">Bổ sung thêm ảnh giới thiệu cho nhà cung cấp. Lưu ý tỉ lệ ảnh 16:9</p>
+
+                    <div class="images full-width">
+                        <app-upload style="width: 100%; float:left; margin-right: 6px;" [limit]="15"
+                            [limitTotal]="images.length" [limitSizeInMb]="5" [uploadType]="1"
+                            [buttonName]="'Upload ảnh'" (onUploadFinished)="uploadImageFinished($event)"></app-upload>
+                    </div>
+                    <div class="left origin-photo">
+                        <div *ngIf="images && images.length > 0">
+                            <app-card-photo-grid class="left" [photos]="images"></app-card-photo-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <div class="row">
+                    <p class="label left">Nội dung giới thiệu nhà cung cấp</p>
+
+                    <div class="editor full-width">
+                        <p class="">Nội dung giới thiệu nhà cung cấp</p>
+                        <mat-form-field class="example-full-width">
+                            <mat-label></mat-label>
+                            <textarea matInput placeholder="..." formControlName="description"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

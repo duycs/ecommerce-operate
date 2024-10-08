@@ -1,0 +1,170 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs">
+  <div class="print-box" *ngIf="data">
+    <div class="full-width">
+      <div class="container no-margin full-width">
+        <div class="row">
+          <div class="col-12">
+
+            <div class="row">
+              <div class="col-6" style="text-align: center;">
+                <p class="label">
+                  Liên hệ SBB: 0335.73.6969
+                </p>
+                <p>
+                  Địa chỉ:
+                </p>
+              </div>
+              <div class="col-6">
+                <p class="">
+                  (Ban hành theo Thông tư số 200/2014/TT-BTC
+                  <br>
+                  Ngày 22/12/2014 của Bộ Tài chính)
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6" style="text-align: center;">
+                <p class="label" style="font-size: 30px;">
+                  PHIẾU THU
+                </p>
+                <p class="">
+                  {{ data.createdDate | dateDisplay: 'full' }}
+                </p>
+              </div>
+
+              <div class="col-6">
+                <p class="">
+                  Quyển số:...................
+                  <br>
+                  Số: 20
+                  <br>
+                  Nợ: {{data.moneyAccount.name}}
+                  <br>
+                  Có:
+                </p>
+              </div>
+            </div>
+
+            <br>
+            <br>
+            
+            <div class="row">
+              <div class="col">
+                <p class="">
+                  Họ và tên người nộp tiền:
+                  <span>
+                    {{ data?.objectType.name }} - {{data?.object.name}}
+                  </span>
+                </p>
+              </div>
+
+              <div class="row">
+                <div class="col-3">
+                  <p class="">
+                    Địa chỉ:
+                  </p>
+                </div>
+                <div class="col-9">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <p class="">
+                    Lý do nộp: {{data.moneyReason?.name}} - {{data.description}}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="col">
+                <p class="">
+                  Số tiền:
+                  <span class="value label">{{data.totalMoney | currency:'VND'}} ({{textMoney}})</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <p class="">
+                  Kèm theo:...................................
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <p>Chứng từ gốc:
+                  <span>{{data?.billCode}}</span>
+                </p>
+              </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+              <div class="col">
+                <p class="label">
+                  Giám đốc
+                </p>
+                <p>
+                  (Ký, họ tên, đóng dấu)
+                </p>
+              </div>
+
+              <div class="col">
+                <p class="label">
+                  Kế toán trưởng
+                </p>
+                <p>
+                  (Ký, họ tên)
+                </p>
+              </div>
+
+              <div class="col">
+                <p class="label">
+                  Người nộp tiền
+                </p>
+                <p>
+                  (Ký, họ tên)
+                </p>
+              </div>
+
+              <div class="col">
+                <p class="label">
+                  Người lập phiếu
+                </p>
+                <p>
+                  (Ký, họ tên)
+                </p>
+              </div>
+
+              <div class="col">
+                <p class="label">
+                  Thủ quỹ
+                </p>
+                <p>
+                  (Ký, họ tên)
+                </p>
+              </div>
+
+            </div>
+
+            <br>
+            <br>
+            <br>
+
+            <div class="row">
+              <p>Đã nhận đủ số tiền(viết bằng chữ): {{textMoney}}</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

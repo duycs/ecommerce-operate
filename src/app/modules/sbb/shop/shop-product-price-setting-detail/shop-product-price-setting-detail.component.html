@@ -1,0 +1,130 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs">
+    <div class="header-button-row">
+        <app-back-button [title]="'Chi tiết thiết lập giá sản phẩm theo NCC'" [real]="'done'"></app-back-button>
+        <div class="create-delivery-order action ">
+            <button class="right-button" mat-raised-button color="warn" (click)="remove()">
+                <mat-icon>delete</mat-icon>
+                <span>Xóa</span>
+            </button>
+            <button class="right-button" mat-raised-button color="primary" (click)="update()">
+                <mat-icon>edit</mat-icon>
+                <span>Cập nhật</span>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="data">
+        <div>
+            <mat-card class="full-width">
+                <mat-card-content>
+                    <p class="label">Nhà cung cấp</p>
+                    <div class="container full-width no-margin">
+                        <div class="row">
+                            <div class="col">
+                                <p>Tên nhà cung cấp</p>
+                            </div>
+                            <div class="col">
+                                <p class="label">
+                                    {{ data.shopName }}
+                                </p>
+                            </div>
+                            <div class="col">
+                                <p>Mã nhà cung cấp</p>
+                            </div>
+                            <div class="col">
+                                <p class="label">
+                                    {{ data?.shopCode }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                Mô tả thiết lập
+                            </div>
+                            <div class="col">
+                                <p class="label">{{data.description}}</p>
+                            </div>
+                            <div class="col">
+                                Trạng thái
+                            </div>
+                            <div class="col">
+                                <app-chip [chips]="data.setupStatusChips"></app-chip>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="full-width">
+                <mat-card-content>
+                    <p class="label">Thiết lập chi phí vận chuyển</p>
+                    <div class="container full-width no-margin">
+                        <div class="row">
+                            <div class="col">
+                                <p class="label">{{data.settings?.templateTransporterCost?.name}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="full-width">
+                <mat-card-content>
+                    <p class="label">Danh sách thiết lập lợi nhuận theo danh mục
+                        ({{data.settings?.templateProductProfit?.code}})</p>
+                    <div class="container full-width no-margin">
+                        <div class="table-container">
+                            <table mat-table class="jobs-table mat-elevation-z8" style="box-shadow: none;" *ngIf="settingDataSource"
+                                [dataSource]="settingDataSource">
+
+                                <ng-container matColumnDef="numbericalOrder">
+                                    <mat-header-cell mat-header-cell *matHeaderCellDef>STT </mat-header-cell>
+                                    <mat-cell *matCellDef="let element; let i = index;">
+                                        {{i + 1}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="category">
+                                    <mat-header-cell *matHeaderCellDef> Danh mục </mat-header-cell>
+                                    <mat-cell *matCellDef="let element">
+                                        {{element.categoryName}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="profit">
+                                    <mat-header-cell *matHeaderCellDef> LN theo % </mat-header-cell>
+                                    <mat-cell *matCellDef="let element;">
+                                        {{element?.percentProfit > 0 ? element.percentProfit : ''}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="moneyProfit">
+                                    <mat-header-cell *matHeaderCellDef> LN theo tiền mặt </mat-header-cell>
+                                    <mat-cell *matCellDef="let element;">
+                                        {{element?.moneyProfit > 0 ? element.moneyProfit : ''}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="templateProfit">
+                                    <mat-header-cell *matHeaderCellDef> Template LN </mat-header-cell>
+                                    <mat-cell *matCellDef="let element;">
+                                        {{element?.templateProfit?.name ?? ''}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="description">
+                                    <mat-header-cell *matHeaderCellDef> Mô tả </mat-header-cell>
+                                    <mat-cell *matCellDef="let element;">
+                                        {{element?.description}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </table>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+
+variables:
+  PRODUCT_PREFIX: ${DOCKER_PREFIX}release/
+  COMPOSE_FILE_PRODUCT: docker/docker-compose-product.yml
+
+.product-env:
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^release-ecommerce-.*$/ && $PUBLISH == "true" && $AD_KEY_DEPLOY == $KEY_DEPLOY
+
+#========================= I. Build & Deploy môi trường product ===========================================
+# 1. Build ứng dụng
+build-product 1/2:
+  stage: build
+  extends: .product-env
+  tags:
+    - dev-vpc-vt 
+  script:
+    - docker build . -f docker/Dockerfile -t ${PRODUCT_PREFIX}ecommerce-operation:$CI_COMMIT_TAG -t ${PRODUCT_PREFIX}ecommerce-operation:latest 
+build-product 2/2:
+  stage: build
+  extends: .product-env
+  needs: [build-product 1/2]
+  tags:
+    - dev-vpc-vt
+  script:
+    - docker push ${PRODUCT_PREFIX}ecommerce-operation:$CI_COMMIT_TAG
+    - docker push ${PRODUCT_PREFIX}ecommerce-operation:latest
+
+# 2. Deploy ứng dụng lên product
+# deploy-product 1/2:
+#   stage: deploy
+#   extends: .product-env
+#   tags:
+#     -  
+#   script:
+#     - docker-compose -f $COMPOSE_FILE_PRODUCT pull
+# deploy-product 2/2:
+#   stage: deploy
+#   extends: .product-env
+#   needs: [deploy-product 1/2]
+#   tags:
+#     -  
+#   script:
+#     - docker-compose -f $COMPOSE_FILE_PRODUCT up -d

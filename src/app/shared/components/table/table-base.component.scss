@@ -1,0 +1,117 @@
+// https://stackblitz.com/edit/angular-mat-table-scroll-yapbpa?file=app%2Ftable-basic-example.ts,app%2Ftable-basic-example.html,app%2Ftable-basic-example.scss
+
+:host {
+    height: 100%;
+
+    mat-sidenav-container {
+        display: flex;
+        flex-flow: column;
+        height: 100%;
+        width: 100%;
+
+        mat-sidenav {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-width: 300px;
+            max-width: 300px;
+            overflow-y: hidden;
+            background: white;
+            padding: 0 6px 0 18px;
+        }
+
+        mat-sidenav-content {
+            display: flex;
+            flex-direction: column;
+            align-content: flex-start;
+            justify-content: flex-start;
+            height: 100%;
+            overflow-y: hidden;
+            background: white;
+            overflow: hidden;
+
+            // taken from https://github.com/angular/components/issues/8680            
+            .table-container {
+                width: 100vw; // <!-- THIS WORKS for horizontal scrolling (all columns visibile)
+                // width: 100%; // <!-- THIS DOESNT for horizontal scrolling (no scrollbars)
+                // width: 2800px; // <!-- THIS ALSO DOESNT for horizontal scrolling (no scrollbars)
+            }
+
+            .mat-table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+            }
+
+        }
+
+    }
+}
+
+// table column width helper for mat-tables
+@for $index from 0 through 200 {
+    $size: $index * 2;
+
+    .table-column-#{$size} {
+        // flex: 0 1 #{$size}#{"px"};
+        min-width: #{$size}#{"px"};
+    }
+}
+
+.mat-mdc-table{
+    width: 100%;
+    float: left;
+    display: block;
+    overflow-x: auto;
+}
+
+.mat-mdc-paginator{
+    // float: left;
+    width: 100%;
+}
+
+.mat-drawer-content{
+    overflow: hidden;
+} 
+
+mat-sidenav-content {
+    overflow: hidden;
+}
+
+.mat-mdc-table td button {margin: 5px;}
+
+.table-container {
+    width: 100%!important;
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .mat-mdc-table{
+        display: table;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .mat-mdc-table{
+        display: table;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .mat-mdc-table{
+        display: table;
+    }
+}

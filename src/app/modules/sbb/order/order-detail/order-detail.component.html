@@ -1,0 +1,356 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs">
+    <div class="header-button-row">
+        <app-back-button [title]="'Chi tiết đơn hàng từ khách'" [real]="'done'"></app-back-button>
+
+        <div class="create-delivery-order action ">
+            <button class="right-button" mat-raised-button color="accent" (click)="print()">
+                <mat-icon>print</mat-icon>
+                <span>In hóa đơn</span>
+            </button>
+            <button class="right-button" mat-raised-button color="primary" (click)="confirmDeliveryOrder()">
+                <mat-icon>add</mat-icon>
+                <span [innerHTML]="'order.create-delivery-order' | translate"></span>
+                <div style="margin-left: 12px;" class=" right"></div>
+            </button>
+            <button *ngIf="orderDetail && (orderDetail.detail.status === 0 || orderDetail.detail.status === 1)"
+                class="right-button" mat-raised-button color="primary" (click)="approveOrder()">
+                <mat-icon>check_circle_outline</mat-icon>
+                <span>Duyệt đơn</span>
+                <div style="margin-left: 12px;" class=" right"></div>
+            </button>
+            <button *ngIf="false" class="right-button" mat-raised-button color="warn" (click)="updatePriorityDeliver()">
+                <mat-icon>flash_auto</mat-icon>
+                <span>Phân bổ ưu tiên giao hàng</span>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="orderDetail">
+        <mat-card class="full-width">
+            <mat-card-header>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="container no-margin full-width">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="title">
+                                <p class="label">Thông tin đơn hàng</p>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        {{ 'order.code' | translate}}
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.detail.code}}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="">
+                                        Thời gian đặt hàng
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value">{{orderDetail.detail.orderDate | dateDisplay :'origin'}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Khách hàng
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">
+                                        <a class="hover-pointer no-underline"
+                                            href="/sbb/customers/{{orderDetail.customerId}}">
+                                            {{orderDetail.detail.customerName}}
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="">
+                                        Trạng thái đơn
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <app-chip [chips]="orderDetail.detail.processStatusChips"></app-chip>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Số điện thoại
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value">{{orderDetail.detail.customerPhone}}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="">
+                                        Nhân viên hỗ trợ
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.detail.staffName}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Công nợ
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.detail.customerDebt | currency:
+                                        orderDetail.detail.customerCurrency ?? 'VND'}}</p>
+                                </div>
+                                <div class="col">
+                                </div>
+                                <div class="col">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Định mức
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label red">{{orderDetail.detail.customerDebtLimit | currency:
+                                        orderDetail.detail.customerCurrency ?? 'VND'}}</p>
+                                </div>
+                                <div class="col">
+                                </div>
+                                <div class="col">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <mat-icon style="float: left; margin-right: 6px;">location_on</mat-icon>
+                                    <p class="left" style="margin-right: 6px;">
+                                        Địa chỉ giao hàng:
+                                    </p>
+                                    <p class="value left">{{orderDetail.detail.shippingAddressName}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <mat-icon style="float: left; margin-right: 6px;">notes</mat-icon>
+                                    <p class="left" style="margin-right: 6px;">
+                                        Ghi chú của khách hàng:
+                                    </p>
+                                    <p class="value">{{orderDetail.detail.customerNote}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Ghi chú của nhân viên
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value">{{orderDetail.detail.staffNote}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="title">
+                                <p class="label">Thông tin thanh toán</p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Tổng số lượng
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.detail.totalQuantity}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Tổng tiền nguyên giá
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.detail.totalPrice | currency:'VND'}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Chiết khấu trên từng sản phẩm
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.detail.cashProductDiscount | currency:'VND'}}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Chiết khấu trên đơn(%)
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.detail?.percentOrderDiscount ?? 0}}%</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Chiết khấu trên đơn(Tiền mặt)
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.detail.cashDiscount | currency:'VND'}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Tổng tiền hàng
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.detail.totalPriceAfterDiscount |
+                                        currency:'VND'}}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Khách hàng đã thanh toán
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value label">{{orderDetail.detail.customerPaid | currency:'VND'}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">
+                                        Tài khoản thanh toán
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value">{{orderDetail.detail.paymentAccount?.bankName}}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <br>
+
+        <span class="head-title">Danh sách đơn hàng con</span>
+
+        <div class="" *ngFor="let item of orderDetail.supplierOrders">
+            <mat-card class="full-width">
+                <mat-card-content>
+                    <div class="container no-margin full-width">
+                        <div class="row">
+                            <div class="col">
+                                <p class="label">
+                                    <a class="hover-pointer no-underline" href="/sbb/order-subs/{{item.id}}">
+                                        {{item.code}}
+                                    </a>
+                                </p>
+                                <span>{{item.createdDate | dateDisplay :'origin'}}</span>
+                            </div>
+                            <div class="col">
+                                <p>Nhà cung cấp</p>
+                                <p class="label">
+                                    <!-- <a class="hover-pointer no-underline" href="/sbb/shops/{{item.shopId}}"> -->
+                                    {{item.shopName}}
+                                    <!-- </a> -->
+                                </p>
+                            </div>
+
+                            <div class="col">
+                                <p>Trạng thái đơn</p>
+                                <p class="label">
+                                    <app-chip [chips]="item.processStatusChips"></app-chip>
+                                </p>
+                            </div>
+
+                            <div class="col">
+                                <p>Đã giao/Đặt hàng</p>
+                                <div class="statistic-ratio">
+                                    <span class="information">{{item.quantityDelivered}}/{{item.quantityOrdered}}</span>
+                                    <section class="example-section">
+                                        <mat-progress-bar class="example-margin"
+                                            [ngClass]="item.quantiyDeliverRatioColorClass" mode="determinate"
+                                            [value]="item.quantiyDeliverRatio"></mat-progress-bar>
+                                    </section>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="hover-pointer" (click)="openOrderDetailItemDialog()">
+                                    <p>Sẵn hàng/Còn thiếu</p>
+                                    <div class="statistic-ratio">
+                                        <span class="information">
+                                            {{item.quantityInStock}}/{{
+                                            item.quantityOrdered - item.quantityDelivered }}
+                                        </span>
+                                        <section class="example-section">
+                                            <mat-progress-bar class="example-margin"
+                                                [ngClass]="item.quantityProductRatioColorClass" mode="determinate"
+                                                [value]="item.quantityProductRatio">
+                                            </mat-progress-bar>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <p>Số lượng</p>
+                                <p class="label">
+                                    {{item.quantity}}
+                                </p>
+                            </div>
+
+                            <div class="col">
+                                <p>Thành tiền</p>
+                                <p class="label">
+                                    {{item.totalPrice | currency:'VND'}}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="table" *ngIf="item.products">
+                                <app-order-detail-item [orderId]="orderId" [notDisplayedColumns]="notDisplayedColumns"
+                                    [products]="item.products"></app-order-detail-item>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

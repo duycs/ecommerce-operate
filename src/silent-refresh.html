@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>App</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.11.5/oidc-client.min.js"></script>
+</head>
+
+<body>
+  <script>
+    var mgr = new Oidc.UserManager();
+    mgr.signinSilentCallback().catch(error => {
+      console.error(error);
+    });
+
+  </script>
+</body>
+
+</html>

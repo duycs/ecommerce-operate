@@ -1,0 +1,17 @@
+# Author: Phucdn
+# Ngày 07/03/2023
+
+version: '3.8'
+services:
+  ecommerce-operation:
+    image: ${DOCKER_PREFIX}develop/ecommerce-operation:latest
+    restart: always
+    networks:
+      - nk-service
+    container_name: ecommerce-operation
+    ports:
+      - 5100:81
+networks:
+  nk-service:
+    name: nk-service
+    external: true

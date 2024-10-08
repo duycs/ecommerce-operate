@@ -1,0 +1,116 @@
+<div class="form">
+    <h2 mat-dialog-title>{{'product.create-product' | translate}}</h2>
+    <mat-dialog-content [formGroup]="form">
+        <mat-stepper orientation="horizontal">
+            <mat-step>
+                <ng-template matStepLabel>Tên và phân loại sản phẩm</ng-template>
+                <ng-template matStepContent>
+                    <div class="container">
+                        <mat-form-field>
+                            <mat-label [innerHTML]="'product.shop' | translate"></mat-label>
+                            <input matInput placeholder="" formControlName="shop">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label [innerHTML]="'product.name' | translate"></mat-label>
+                            <input matInput placeholder="" formControlName="name">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label [innerHTML]="'product.category' | translate"></mat-label>
+                            <mat-select [formControl]="productCategoryIds" multiple>
+                                <mat-option *ngFor="let category of productCategories"
+                                    [value]="category.id">{{category.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </ng-template>
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel>Mô tả sản phẩm</ng-template>
+                <ng-template matStepContent>
+                    <div class="container">
+                        <mat-form-field>
+                            <mat-label [innerHTML]="'product.description' | translate"></mat-label>
+                            <input matInput placeholder="" formControlName="description">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label [innerHTML]="'product.sku' | translate"></mat-label>
+                            <input matInput placeholder="" formControlName="sku">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label [innerHTML]="'product.madein' | translate"></mat-label>
+                            <mat-select [formControl]="madeinIds" multiple>
+                                <mat-option *ngFor="let madein of madeins"
+                                    [value]="madein.id">{{madein.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label [innerHTML]="'product.brand' | translate"></mat-label>
+                            <mat-select [formControl]="brandIds" multiple>
+                                <mat-option *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label [innerHTML]="'product.unit' | translate"></mat-label>
+                            <mat-select [formControl]="unitIds">
+                                <mat-option *ngFor="let unit of units" [value]="unit.id">{{unit.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label [innerHTML]="'product.price' | translate"></mat-label>
+                            <input matInput placeholder="" formControlName="price">
+                        </mat-form-field>
+
+                        <div class="container">
+                            <div class="container">
+                                <app-upload style="float:left; margin-right: 6px;" [limit]="15"
+                                    [limitTotal]="images.length" [limitSizeInMb]="5" [uploadType]="1"
+                                    (onUploadFinished)="uploadImageFinished($event)"></app-upload>
+
+                                <button *ngIf="images.length > 0" mat-raised-button color="primary"
+                                    (click)="deleteAllImages()" [innerHtml]="'action.delete-all' | translate"></button>
+                            </div>
+                            <div class="left origin-photo">
+                                <div *ngIf="images && images.length > 0">
+                                    <app-card-photo-grid class="left" [photos]="images"></app-card-photo-grid>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel>Thêm thuộc tính</ng-template>
+                <ng-template matStepContent>
+                    <div class="container">
+                    </div>
+                </ng-template>
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel>Vận hành</ng-template>
+                <ng-template matStepContent>
+                    <div class="container">
+                    </div>
+                </ng-template>
+            </mat-step>
+
+        </mat-stepper>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="container">
+        <div class="group-btn">
+            <button mat-raised-button color="primary" (click)="close()"
+                [innerHTML]="'action.close' | translate"></button>
+            <button mat-raised-button color="primary" (click)="save()" [innerHTML]="'action.save' | translate"></button>
+        </div>
+    </mat-dialog-actions>
+</div>

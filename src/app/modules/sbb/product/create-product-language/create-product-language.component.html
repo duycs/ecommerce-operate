@@ -1,0 +1,133 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs" *ngIf="productDetail">
+    <div class="header-button-row">
+        <app-back-button [title]="'Tạo phiên bản tiếng Việt'"></app-back-button>
+
+        <div class="create-delivery-order action">
+            <button class="right-button" mat-raised-button color="primary" (click)="save()">
+                <mat-icon>save</mat-icon>
+                <span>Lưu</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="full-width" [formGroup]="form">
+        <mat-card class="">
+            <mat-card-content>
+                <div class="container no-margin full-width">
+                    <div class="row" style="margin-bottom: 12px;">
+                        <div class="col-3">
+                            <div class="image-border-green">
+                                <img src="{{productDetail.image}}">
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="fill">
+                                                <input matInput type="text" formControlName="name" [readonly]="false">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="">Mã sản phẩm</p>
+                                        </div>
+                                        <div class="col">
+                                            <p class="label">{{productDetail.sku}}</p>
+                                        </div>
+                                        <div class="col">
+                                            <p class="">Thương hiệu</p>
+                                        </div>
+                                        <div class="col">
+                                            <p class="label">{{productDetail.brand}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="">Nhà cung cấp</p>
+                                        </div>
+                                        <div class="col">
+                                            <p class="label">{{productDetail.shopId}}</p>
+                                        </div>
+                                        <div class="col">
+                                            <p class="">Danh mục</p>
+                                        </div>
+                                        <div class="col">
+                                            <p class="label">{{productDetail.category}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="">Giá bán</p>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field  appearance="fill">
+                                                <input matInput type="text" formControlName="price"
+                                                    [readonly]="false">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <p class="">Giá nhập</p>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field  appearance="fill">
+                                                <input matInput type="text" formControlName="cost"
+                                                    [readonly]="false">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-icon style="float: left; margin-right: 6px;">notes</mat-icon>
+                                            <p class="left" style="margin-right: 6px;">
+                                                Mô tả sản phẩm:
+                                            </p>
+                                            <mat-form-field  appearance="fill">
+                                                <input matInput type="text" formControlName="description"
+                                                    [readonly]="false">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <p class="label">Trạng thái</p>
+                                    <mat-radio-group aria-label="">
+                                        <mat-radio-button value="1">Hoạt động</mat-radio-button>
+                                        <mat-radio-button value="0">Không hoạt động</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="head-title no-padding no-margin">Phân loại sản phẩm</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="label">Màu sắc</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <app-chip [chips]="productDetail.colorChips"></app-chip>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="label">Kích thước</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <app-chip [chips]="productDetail.sizeChips"></app-chip>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+
+</div>

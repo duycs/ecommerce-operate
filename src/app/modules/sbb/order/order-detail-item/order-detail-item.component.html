@@ -1,0 +1,140 @@
+<div class="product" *ngFor="let product of products; index as indexOfelement">
+    <table mat-table [dataSource]="product.productColors" class="mat-elevation-z8">
+        <ng-container matColumnDef="information">
+            <td mat-footer-cell *matHeaderCellDef [attr.colspan]="displayedColumns.length" class="">
+                <div class="" style="padding: 12px 0; float: left;" [ngStyle]="{width: displayPercent + '%'}">
+                    <a class="hover-pointer no-underline" href="/sbb/products/{{product.id}}">
+                        <span class="label">{{ product.name }}</span>
+                        <p>{{ product.sku }}</p>
+                    </a>
+                </div>
+
+                <div *ngIf="!showQuantityStatus" class="left"
+                    style="padding: 12px 0; margin-right: 60px; text-align: center;">
+                    <p class="label">{{product.totalQuantity ?? 0}}</p>
+                </div>
+
+                <div *ngIf="showQuantityStatus" class="left" style="padding: 12px 0;">
+                    <p>Đã giao/Đặt hàng</p>
+                    <div class="statistic-ratio">
+                        <span>{{product.quantityDelivered}}/{{product.quantity}}</span>
+                        <section class="example-section">
+                            <mat-progress-bar class="example-margin" [ngClass]="product.quantiyDeliverRatioColorClass"
+                                mode="determinate" [value]="product.quantiyDeliverRatio"></mat-progress-bar>
+                        </section>
+                    </div>
+                </div>
+
+                <div *ngIf="showQuantityStatus" class="left" style="margin-left: 24px; padding: 12px 0;">
+                    <p>Sẵn hàng/Còn thiếu</p>
+                    <div class="statistic-ratio">
+                        <span class="information">
+                            {{product.quantityInStock}}/{{ product.quantityLeft }}
+                            <!-- {{product.quantityInStock - product.quantityLeft}}/{{ product.quantityLeft }} -->
+                        </span>
+                        <section class="example-section">
+                            <mat-progress-bar class="example-margin" [ngClass]="product.quantityProductRatioColorClass"
+                                mode="determinate" [value]="product.quantityProductRatio">
+                            </mat-progress-bar>
+                        </section>
+                    </div>
+                </div>
+
+                <div *ngIf="isShowTotalPrice" class="right" style="padding: 12px 0;"
+                    [ngStyle]="{marginRight: marginRightTotalPrice + 'px'}">
+                    <p class="label">{{product.totalPrice | currency:'VND'}}</p>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="numbericalOrder">
+            <th mat-header-cell *matHeaderCellDef> {{ indexOfelement == 0 ? 'STT' : '' }} </th>
+            <td mat-cell *matCellDef="let element; let i = index;">
+                {{i + 1}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="image">
+            <th mat-header-cell *matHeaderCellDef style="width: 5%;"></th>
+            <td mat-cell *matCellDef="let item">
+                <div class="image" *ngIf="item.image">
+                    <img style="width: 50px;" src="{{item?.image}}">
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef style="width: 10%;">{{ indexOfelement == 0 ? 'Sản phẩm' : ''}}</th>
+            <td mat-cell *matCellDef="let item">
+                <span>{{item.name}}</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="detail">
+            <th mat-header-cell *matHeaderCellDef style="width: 20%;">{{ indexOfelement == 0 ? 'Chi tiết sản phẩm' : ''
+                }}</th>
+            <td mat-cell *matCellDef="let item">
+                <span *ngFor="let o of item.detail">
+                    <span>{{o.name}}/</span>
+                    <span [ngClass]="getQuantityClass()">{{o.quantity}} </span>
+                </span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef style="width: 25%;">{{ indexOfelement == 0 ? 'Số lượng' : '' }}</th>
+            <td mat-cell *matCellDef="let item"> {{item.totalQuantity ?? ''}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>{{ indexOfelement == 0 ? 'Giá' : ''}}</th>
+            <td mat-cell *matCellDef="let item"> {{item.price | currency:'VND'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="percentDiscount">
+            <th mat-header-cell *matHeaderCellDef>{{ indexOfelement == 0 ? 'CK(%)' : '' }}</th>
+            <td mat-cell *matCellDef="let item"> {{(item.discountPrice ?? 0) == 0 ? '' : ((item.discountPrice) *
+                item.totalPrice)/100}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="cashDiscount">
+            <th mat-header-cell *matHeaderCellDef>{{ indexOfelement == 0 ? 'CK(TM)' : '' }}</th>
+            <td mat-cell *matCellDef="let item"> {{(item?.discountPrice ?? 0) == 0 ? '' : item?.discountPrice |
+                currency:'VND'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalPrice">
+            <th mat-header-cell *matHeaderCellDef>{{ indexOfelement == 0 ? 'Tổng tiền' : '' }}</th>
+            <td mat-cell *matCellDef="let item"> {{item.totalPrice - (item.discountPrice ?? 0) | currency:'VND'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action" sticky>
+            <th mat-header-cell *matHeaderCellDef class="head-action" style="width: 5%;"
+                [innerHTML]="'action.title' | translate">
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="actions">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+
+                    <button mat-menu-item (click)="openRemoveDialog(element, product)">
+                        <mat-icon>delete</mat-icon>
+                        <span [innerHTML]="'action.delete' | translate"></span>
+                    </button>
+
+                    <button mat-menu-item (click)="openUpdateDialog(element, product)">
+                        <mat-icon>edit</mat-icon>
+                        <span [innerHTML]="'action.update' | translate"></span>
+                    </button>
+
+                </mat-menu>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"> </tr>
+
+        <tr mat-footer-row *matHeaderRowDef="['information']" class="example-second-footer-row"></tr>
+    </table>
+</div>

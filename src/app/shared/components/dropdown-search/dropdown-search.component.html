@@ -1,0 +1,78 @@
+<div id="dropdownSearch">
+  <mat-form-field class="input example-chip-list" appearance="fill" style="width: 100%">
+    <mat-chip-grid #chipGrid>
+      <div class="action" style="float: right; z-index: 1000">
+        <button matSuffix mat-icon-button aria-label="Filter">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+      </div>
+
+      <mat-chip-row
+        style="top: 6px"
+        *ngFor="let option of options"
+        (removed)="remove(option)"
+        [editable]="true"
+        aria-description="{{ 'search.enter-to-choose' | translate }}"
+      >
+        {{ option.viewValues }}
+        <button matChipRemove [attr.aria-label]="'xóa ' + option.name">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+
+      <input
+        style="padding: 10px"
+        placeholder="{{ filterPlaceHolder }}"
+        #optionInput
+        [formControl]="optionCtrl"
+        [matChipInputFor]="chipGrid"
+        [matAutocomplete]="auto"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="add($event)"
+        (keyup.enter)="onSearchEnter($event)"
+      />
+
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedOption($event)">
+        <mat-option *ngFor="let option of filterOptions | async" [value]="option.id" class="option-header">
+          {{ option.name }}
+        </mat-option>
+      </mat-autocomplete>
+      <button style="margin-top: 6px" *ngIf="options && options.length > 0" matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <div class="action" style="float: right; z-index: 1000">
+        <button matSuffix mat-icon-button aria-label="Search" (click)="search()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+    </mat-chip-grid>
+  </mat-form-field>
+
+  <!-- text value -->
+  <mat-form-field *ngIf="isInputValue">
+    <input
+      style="margin-top: 8px"
+      id="inputText"
+      matInput
+      placeholder="{{ 'search.input-text' | translate }}"
+      [formControl]="inputTextControl"
+      (keyup.enter)="onInputValueEnter($event)"
+    />
+  </mat-form-field>
+
+  <!-- date range value -->
+  <mat-form-field *ngIf="isDateRange" class="date-range">
+    <mat-label>Nhập khoảng ngày</mat-label>
+    <mat-date-range-input (keyup.enter)="enterDateRange()" style="margin-top: 22px" [formGroup]="dateRange" [rangePicker]="picker">
+      <input matStartDate formControlName="start" placeholder="Ngày bắt đầu" />
+      <input matEndDate formControlName="end" placeholder="Ngày kết thúc" (dateChange)="choosedEndDate()" />
+    </mat-date-range-input>
+    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle style="position: absolute; left: 0; top: 0" matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+
+    <mat-error *ngIf="dateRange.controls.start.hasError('matStartDateInvalid')">Ngày bắt đầu không hợp lệ</mat-error>
+    <mat-error *ngIf="dateRange.controls.end.hasError('matEndDateInvalid')">Ngày kết thúc không hợp lệ</mat-error>
+  </mat-form-field>
+</div>

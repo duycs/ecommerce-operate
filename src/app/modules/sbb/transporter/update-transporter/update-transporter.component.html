@@ -1,0 +1,118 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs" [formGroup]="form">
+    <div class="header-button-row">
+        <app-back-button [title]="'Cập nhật nhà vận chuyển'" [real]="'doing'"></app-back-button>
+
+        <div class="action">
+            <button class="right-button" mat-raised-button color="primary" (click)="save()">
+                <mat-icon>save</mat-icon>
+                <span>Lưu</span>
+            </button>
+        </div>
+    </div>
+
+    <mat-card class="full-width" *ngIf="transporter">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Tên nhà vận chuyển</mat-label>
+                                <input matInput formControlName="name">
+                            </mat-form-field>
+
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Mã nhà vận chuyển</mat-label>
+                                <input matInput formControlName="code">
+                            </mat-form-field>
+
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Số điện thoại</mat-label>
+                                <input matInput formControlName="phoneNumber">
+                            </mat-form-field>
+
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Email</mat-label>
+                                <input matInput formControlName="email">
+                            </mat-form-field>
+
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Mô tả</mat-label>
+                                <input matInput formControlName="description">
+                            </mat-form-field>
+
+                            <!-- <mat-form-field>
+                                <mat-label>Đơn vị tiền tệ</mat-label>
+                                <mat-select matNativeControl formControlName="currency">
+                                    <mat-option *ngFor="let currency of currencies"
+                                        [value]="currency.code">{{currency.code}}</mat-option>
+                                </mat-select>
+                            </mat-form-field> -->
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field>
+                                <mat-label>Quốc gia</mat-label>
+                                <mat-select matNativeControl formControlName="country">
+                                    <mat-option *ngFor="let country of countries"
+                                        [value]="country.code">{{country.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <app-location [wardId]="transporter.wardId" (locationSelected)="locationSelected($event)"></app-location>
+
+                            <mat-form-field>
+                                <mat-label>Địa chỉ</mat-label>
+                                <input matInput placeholder="*" formControlName="address">
+                            </mat-form-field>
+
+                            <!-- <mat-form-field class="example-full-width">
+                                <mat-label>Giới hạn công nợ {{textMoney}}</mat-label>
+                                <input matInput formControlName="debtLimit">
+                            </mat-form-field> -->
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <app-chip-autocomplete style="width: 100%;" *ngIf="shops" [allChips]="shops"
+                            [title]="'Nhà cung cấp'"
+                            [selectedChips]="transporter.shops"
+                            (outSelectedOptions)="onSelectShop($event)"></app-chip-autocomplete>
+                    </div>
+
+                    <div class="row">
+                        <p class="label">Trạng thái</p>
+                        <mat-radio-group aria-label="" formControlName="isAcivated">
+                            <mat-radio-button value="true">Hoạt động</mat-radio-button>
+                            <mat-radio-button value="false">Không hoạt động</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <div class="row">
+                    <p class="label left">Ảnh đại diện</p>
+                    <div class="images full-width">
+                        <app-upload style="width: 100%; float:left; margin-right: 6px;" [limit]="1"
+                            [limitTotal]="avatars.length" [limitSizeInMb]="5" [uploadType]="1"
+                            [buttonName]="'Upload ảnh'" (onUploadFinished)="uploadAvatarImageFinished($event)"></app-upload>
+                    </div>
+                    <div class="left origin-photo">
+                        <div *ngIf="avatars && avatars.length > 0">
+                            <app-card-photo-grid class="left" [photos]="avatars"></app-card-photo-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    
+</div>

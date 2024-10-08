@@ -1,0 +1,152 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs" *ngIf="postDetail">
+    <div class="header-button-row">
+        <app-back-button [title]="'Tạo phiên bản đa ngôn ngữ'"></app-back-button>
+
+        <div class="create-delivery-order action">
+            <button class="right-button" mat-raised-button color="primary" (click)="save()">
+                <mat-icon>save</mat-icon>
+                <span>Lưu</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="post" class="full-width">
+        <mat-tab-group class="full-width" mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab label="Tiếng Trung Quốc">
+                <mat-card class="full-width no-margin">
+                    <mat-card-content>
+                        <div class="container no-margin full-width">
+                            <div class="row">
+                                <p class="label">Thông tin bài đăng</p>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p>Id bài đăng</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label">{{postDetail.id}}</p>
+                                </div>
+                                <div class="col">
+                                    <p><span matTooltip="{{postDetail.createdDate | dateDisplay:'origin'}}"
+                                            matTooltipPosition="above">
+                                            {{postDetail.createdDate | dateDisplay}}
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">Nhà cung cấp</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label">{{postDetail.shopName}}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="full-width">Người tạo phiên bản đa ngôn ngữ</p>
+                                </div>
+                                <div class="col">
+                                    <p>{{postDetail.createdBy}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <p class=""><mat-icon>notes</mat-icon> Nội dung bài đăng:</p>
+                                <mat-form-field class="example-full-width">
+                                    <mat-label></mat-label>
+                                    <textarea matInput placeholder="...">{{postDetail.content}}</textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </mat-tab>
+
+            <!-- <mat-tab label="Tiếng Trung Quốc">
+
+            </mat-tab> -->
+        </mat-tab-group>
+    </div>
+
+    <p class="head-title">Danh sách sản phẩm trong bài đăng</p>
+
+    <div class="no-margin full-width">
+        <div class="table-container full-width">
+            <table mat-table class="jobs-table mat-elevation-z8" *ngIf="dataSource" [dataSource]="dataSource" matSort
+                matSortActive="id" matSortDirection="asc" matSortDisableClear>
+
+                <ng-container matColumnDef="orderNumber">
+                    <th mat-header-cell *matHeaderCellDef>STT </th>
+                    <td mat-cell *matCellDef="let element; let i = index;">
+                        {{i + 1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="image">
+                    <th mat-header-cell *matHeaderCellDef>Ảnh
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="image" *ngIf="element.imageUrl">
+                            <img style="width: 50px;" src="{{element?.imageUrl}}">
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>Tên sản phẩm
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element?.product?.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef>Danh mục
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.productCategory}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="brand">
+                    <th mat-header-cell *matHeaderCellDef>Thương hiệu
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.productBrand}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef>Giá bán
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.productMaxPrice ?? 0 | currency: 'VND'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef>Mô tả
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.content}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action" sticky>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="head-action"
+                        [innerHTML]="'action.title' | translate">
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openRemoveDialog(element)">
+                                <mat-icon>delete</mat-icon>
+                                <span [innerHTML]="'action.delete' | translate"></span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [length]="this.dataSource.data.length" [pageIndex]="0" [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons (page)="handlePageEvent($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

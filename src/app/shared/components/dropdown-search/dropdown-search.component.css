@@ -1,0 +1,21 @@
+.mat-mdc-form-field-input-control {
+  padding: 10 !important;
+}
+
+.mat-mdc-chip {
+  margin-top: 8px !important;
+}
+
+.mat-mdc-text-field-wrapper {
+  padding: 0px !important;
+}
+
+.mat-mdc-form-field-infix {
+  margin-left: 50px !important;
+}
+
+.option-header {
+  ::first-letter {
+    text-transform: capitalize;
+  }
+}

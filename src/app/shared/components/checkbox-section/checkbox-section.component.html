@@ -1,0 +1,18 @@
+<section class="example-section">
+    <span class="example-list-section">
+        <mat-checkbox class="example-margin" [disabled]="checkbox.disabled" [checked]="allComplete" [color]="checkbox.color"
+            [indeterminate]="someComplete()" (change)="setAll($event.checked)">
+            <span class="label">{{checkbox.name}}</span>
+        </mat-checkbox>
+    </span>
+    <span class="example-list-section">
+        <ul>
+            <li *ngFor="let subCheckbox of checkbox.subCheckboxs">
+                <mat-checkbox [disabled]="subCheckbox.disabled" [(ngModel)]="subCheckbox.completed" [color]="subCheckbox.color"
+                    (ngModelChange)="updateAllComplete()">
+                    {{subCheckbox.name}}
+                </mat-checkbox>
+            </li>
+        </ul>
+    </span>
+</section>

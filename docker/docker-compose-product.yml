@@ -1,0 +1,12 @@
+# Author: Phucdn
+# Ngày 07/03/2023
+# dùng để build lên môi trường dev, hiện tại đang dùng server 116.
+
+version: '3.8'
+services:
+  ecommerce-operation:
+    image: ${DOCKER_PREFIX}release/ecommerce-operation:latest
+    restart: always
+    container_name: ecommerce-operation
+    ports:
+      - 5100:81

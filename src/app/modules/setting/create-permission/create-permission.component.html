@@ -1,0 +1,57 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs" [formGroup]="form">
+    <div class="header-button-row">
+        <app-back-button [title]="'Tạo mới nhóm quyền'"></app-back-button>
+
+        <div class="action">
+            <button class="right-button" mat-raised-button color="primary" (click)="save()">
+                <mat-icon>save</mat-icon>
+                <span>Lưu</span>
+            </button>
+        </div>
+    </div>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <p class="label">Thông tin nhóm quyền</p>
+            <div class="container no-margin full-width">
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field>
+                            <mat-label>Tên nhóm quyền</mat-label>
+                            <input matInput placeholder="" formControlName="name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col">
+                        <mat-form-field>
+                            <mat-label>Mã nhóm quyền</mat-label>
+                            <input matInput placeholder="" formControlName="code">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field>
+                            <mat-label>Mô tả</mat-label>
+                            <input matInput placeholder="*" formControlName="description">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <p class="label">Thiết lập quyền</p>
+                <p>Chọn gắn các quyền cho nhóm quyền</p>
+
+                <div class="row" *ngFor="let group of permissionGroups">
+                    <app-checkbox-section [checkbox]="group"></app-checkbox-section>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+</div>

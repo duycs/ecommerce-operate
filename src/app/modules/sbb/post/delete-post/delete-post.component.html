@@ -1,0 +1,12 @@
+<mat-dialog-content>
+    <h1 mat-dialog-title>Xóa bài đăng</h1>
+    <div mat-dialog-content>
+        Bạn có muốn xóa bài đăng {{data.name}}?
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions class="container">
+    <div class="group-btn">
+        <button mat-button color="primary" (click)="onNoClick()">No</button>
+        <button mat-button mat-dialog-close color="primary" (click)="onRemove(data.id)" cdkFocusInitial>Yes</button>
+    </div>
+</mat-dialog-actions>

@@ -1,0 +1,47 @@
+<div class="parent">
+  <mat-card class="example-card">
+    <h2 mat-dialog-title>{{ 'login.login' | translate }}</h2>
+    <mat-dialog-content [formGroup]="form">
+      <img src="assets/images/logo-pexnic-light.png" width="175" class="mb-4" />
+
+      <mat-form-field>
+        <mat-label [innerHTML]="'login.phone' | translate"></mat-label>
+        <input matInput placeholder="" formControlName="username" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label [innerHTML]="'login.password' | translate"></mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="container">
+      <div class="group-btn">
+        <button mat-raised-button color="primary" (click)="onSubmit()" [innerHTML]="'login.login' | translate"></button>
+      </div>
+      <div class="container">
+        <a href="/register?role=Supplier" class="btn btn-link" [innerHTML]="'supplier.register' | translate"></a>
+        <a href="/register?role=Sbb" class="btn btn-link" [innerHTML]="'sbb.register' | translate"></a>
+      </div>
+    </mat-dialog-actions>
+
+    <div *ngIf="errorMessage !== ''" class="message">
+      <div class=" container alert alert-danger mt-3" role="alert">
+        <strong>Oops!</strong> {{errorMessage}}
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<div class="center full-width" style="position: fixed; bottom: 50px; left: 47%;">
+  <div style="margin: 12px 0;">
+    <mat-chip disabled>
+      Build: {{buildVersion}}
+    </mat-chip>
+  </div>
+</div>

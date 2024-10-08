@@ -1,0 +1,108 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs" *ngIf="staffDetail">
+    <div class="header-button-row">
+        <app-back-button [title]="'Chi tiết tài khoản nhân viên'"></app-back-button>
+    </div>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <div class="row full-width" style="margin-bottom: 12px;">
+                    <div class="col-3">
+                        <div class="image-border-green" style="border-radius: 50%; width: 150px; height: 150px;">
+                            <img class="image-border-green" style="border-radius: 50%;" src="{{staffDetail.avatarUrl}}">
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <app-staff-profile [staffDetail]="staffDetail"></app-staff-profile>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <div class="full-width">
+        <mat-tab-group class="full-width" mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab label="Thông tin cá nhân">
+                <mat-card class="full-width">
+                    <mat-card-content>
+                        <div class="container no-margin full-width">
+                            <div class="header-button-row">
+                                <div class="create-delivery-order action">
+                                    <button class="right-button" mat-raised-button color="primary"
+                                        (click)="editStaffProfile()">
+                                        <mat-icon>edit</mat-icon>
+                                        <span>Chỉnh sửa</span>
+                                    </button>
+
+                                    <button class="right-button" mat-raised-button color="primary"
+                                        (click)="editStaffPassword()">
+                                        <mat-icon>enhanced_encryption</mat-icon>
+                                        <span>Đổi mật khẩu</span>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                            <app-staff-profile [staffDetail]="staffDetail"></app-staff-profile>
+
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </mat-tab>
+
+            <mat-tab label="Phân quyền">
+                <mat-card class="full-width">
+                    <mat-card-content>
+                        <div class="container no-margin full-width">
+                            <div class="header-button-row">
+                                <div class="create-delivery-order action">
+                                    <button class="right-button" mat-raised-button color="primary"
+                                        (click)="editStaffPermission()">
+                                        <mat-icon>edit</mat-icon>
+                                        <span>Chỉnh sửa</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="left lebel">Phân quyền</p>
+                                    <app-chip class="full-width" [chips]="staffDetail.permissionGroups"></app-chip>
+                                </div>
+                            </div>
+
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </mat-tab>
+
+            <mat-tab label="Tài khoản tiền">
+                <mat-card class="full-width">
+                    <mat-card-content>
+                        <div class="container no-margin full-width">
+                            <div class="header-button-row">
+                                <div class="create-delivery-order action">
+                                    <button class="right-button" mat-raised-button color="primary"
+                                        (click)="editStaffMoneyAccount()">
+                                        <mat-icon>edit</mat-icon>
+                                        <span>Chỉnh sửa</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="left lebel">Tài khoản tiền</p>
+                                    <app-chip class="full-width" [chips]="staffDetail.moneyAccountChips"></app-chip>
+                                </div>
+                            </div>
+
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </mat-tab>
+
+        
+        </mat-tab-group>
+    </div>
+</div>

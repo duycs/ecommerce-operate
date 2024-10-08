@@ -1,0 +1,148 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs" *ngIf="shopDetail">
+    <div class="header-button-row">
+        <app-back-button [title]="'Chi tiết nhà cung cấp'" [real]="'done'"></app-back-button>
+
+        <div class="create-delivery-order action">
+            <button *ngIf="false" class="right-button" mat-raised-button color="primary">
+                <mat-icon>add</mat-icon>
+                <span>Tạo</span>
+            </button>
+        </div>
+    </div>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <div class="row full-width" style="margin-bottom: 12px;">
+                    <div class="col-3">
+                        <div class="image-border-green" style="border-radius: 50%; width: 150px; height: 150px;">
+                            <img class="image-border-green" style="border-radius: 50%;" src="{{shopDetail.avatar}}">
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <div class="container full-width">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">Tên nhà cung cấp</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label">{{shopDetail.name}}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="">Email</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label">{{shopDetail.email}}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="">Công nợ</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label">{{shopDetail?.debt | currency: shopDetail?.curency?.name ?? "VND"}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">Số điện thoại</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label">{{shopDetail.phoneNumber}}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="">Quốc gia</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label">{{shopDetail.country ?? "Việt Nam"}}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="">Đơn vị tiền tệ</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label">{{shopDetail.curency ?? "VND"}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">Trạng thái</p>
+                                </div>
+                                <div class="col">
+                                    <app-chip [chips]="shopDetail.statusChips"></app-chip>
+                                </div>
+                                <div class="col">
+                                </div>
+                                <div class="col">
+                                </div>
+                                <div class="col">
+                                </div>
+                                <div class="col">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <div class="full-width">
+        <mat-tab-group class="full-width" mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab label="Giới thiệu nhà cung cấp">
+                <mat-card class="full-width">
+                    <mat-card-content>
+                        <div class="container no-margin full-width">
+                            <div class="header-button-row">
+                                <div class="create-delivery-order action">
+                                    <button class="right-button" mat-raised-button color="primary" (click)="editShop()">
+                                        <mat-icon>edit</mat-icon>
+                                        <span>Chỉnh sửa</span>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <p class="label left">Banner slider giới thiệu nhà cung cấp</p>
+
+                                <div class="images" *ngIf="shopDetail.slideUrls && shopDetail.slideUrls.length > 0">
+                                    <div class="slide" *ngFor="let image of shopDetail.slideUrls">
+                                        <div class="image" style="float: left; padding:6px;" *ngIf="image">
+                                            <img style="width: 200px; height: 150px; border-radius: 6px;" src="{{image}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <p class="label left">Nội dung giới thiệu nhà cung cấp</p>
+
+                                <div class="content description">
+                                    <p>{{shopDetail.description}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </mat-tab>
+
+            <mat-tab label="Đơn đặt hàng">
+                <app-shop-order-list></app-shop-order-list>
+            </mat-tab>
+
+            <mat-tab label="Đơn chuyển hàng">
+                <app-shop-order-transfer-list></app-shop-order-transfer-list>
+            </mat-tab>
+
+            <mat-tab label="Sản phẩm">
+                <app-shop-product-list></app-shop-product-list>
+            </mat-tab>
+
+            <mat-tab label="Thanh toán công nợ">
+                <app-shop-paid-debt-list (outUpdate)="updateShop($event)"></app-shop-paid-debt-list>
+            </mat-tab>
+
+            <mat-tab label="Lịch sử công nợ">
+                <app-shop-debt-list></app-shop-debt-list>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

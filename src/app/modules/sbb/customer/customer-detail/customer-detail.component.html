@@ -1,0 +1,206 @@
+<div fxFlex class="fxClass-all" ngClass.xs="fxClass-xs" *ngIf="customerDetail">
+    <div class="header-button-row">
+        <app-back-button [title]="'Chi tiết khách hàng'" [real]="'done'"></app-back-button>
+
+        <div class="create-delivery-order action">
+            <button *ngIf="false" class="right-button" mat-raised-button color="primary">
+                <mat-icon>add</mat-icon>
+                <span>Tạo</span>
+            </button>
+        </div>
+    </div>
+
+    <mat-card class="full-width">
+        <mat-card-content>
+            <div class="container no-margin full-width">
+                <div class="row full-width" style="margin-bottom: 12px;">
+                    <div class="col-3">
+                        <div class="image-border-green" style="border-radius: 50%; width: 150px; height: 150px;">
+                            <img src="{{customerDetail.avatar}}">
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <div class="container full-width">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">Tên khách hàng</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label">{{customerDetail.name}}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="">Email</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label">{{customerDetail.email}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">Số điện thoại</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label">{{customerDetail.phoneNumber}}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="">Giới tính</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label">{{customerDetail.gender}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">Công nợ</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label">{{customerDetail.debt | currency: customerDetail.currency ??
+                                        'VND'}}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="">Đơn vị tiền tệ</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label">{{customerDetail.currency ?? 'VND'}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">Định mức</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label red">{{customerDetail.debtLimit | currency: customerDetail.currency ??
+                                        'VND'}}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="">Trạng thái</p>
+                                </div>
+                                <div class="col">
+                                    <app-chip [chips]="customerDetail.statusChips"></app-chip>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="">Sinh nhật</p>
+                                </div>
+                                <div class="col">
+                                    <p class="label">{{customerDetail.dob | dateDisplay: 'full'}}</p>
+                                </div>
+                                <div class="col">
+                                    <mat-icon style="float: left; margin-right: 6px;">location_on</mat-icon>
+                                    <p class="left" style="margin-right: 6px;">
+                                        Địa chỉ:
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="value left">{{customerDetail.address}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <div class="full-width">
+        <mat-tab-group class="full-width" mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab label="Báo cáo">
+                <mat-card class="">
+                    <mat-card-content>
+                        <div class="container no-margin full-width">
+                            <div class="row">
+                                <p class="label font-medium">{{statistic.totalOrder ?? 0}}</p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <mat-icon class="left">shopping_cart</mat-icon>
+
+                                    <p class="label left">
+                                        Số đơn hàng
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card class="">
+                    <mat-card-content>
+                        <div class="container no-margin full-width">
+                            <div class="row">
+                                <p class="label font-medium">{{statistic.totalMoneyOrder ?? 0 | currency:
+                                    customerDetail.currency ?? 'VND'}}</p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <mat-icon class="left">attach_money</mat-icon>
+
+                                    <p class="label left">
+                                        Giá trị đơn hàng
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card class="">
+                    <mat-card-content>
+                        <div class="container no-margin full-width">
+                            <div class="row">
+                                <p class="label font-medium">{{statistic.totalProduct ?? 0}}</p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <mat-icon class="left">card_giftcard</mat-icon>
+
+                                    <p class="label left">
+                                        Số lượng sản phẩm
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card class="">
+                    <mat-card-content>
+                        <div class="container no-margin full-width">
+                            <div class="row">
+                                <p class="label font-medium">{{customerDetail.debt ?? 0 | currency:
+                                    customerDetail.currency ?? 'VND'}}</p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <mat-icon class="left">money</mat-icon>
+                                    <p class="label left">
+                                        Công nợ
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </mat-tab>
+
+            <mat-tab label="Đơn hàng">
+                <app-customer-order-list [customer]="customerDetail" [statistic]="statistic"></app-customer-order-list>
+            </mat-tab>
+
+            <!-- <mat-tab label="Sản phẩm đã mua">
+
+            </mat-tab> -->
+
+            <mat-tab label="Công nợ">
+                <app-customer-debt-list [customer]="customerDetail"></app-customer-debt-list>
+            </mat-tab>
+
+            <mat-tab label="Trả hàng">
+                <app-customer-return-product-list [customer]="customerDetail"
+                    [statistic]="statistic"></app-customer-return-product-list>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
